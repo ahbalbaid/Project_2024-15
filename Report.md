@@ -20,6 +20,52 @@ We will emplement:
 - Radix Sort: Sorting algorithm that processes integers by individual digits. It groups numbers based on each digit, starting from the least significant digit to the most significant, and continues sorting and redistributing them accordingly. In a parallel implementation, it divides the dataset among multiple processors; each processor sorts its portion for each digit position and exchanges data based on counts, repeating this process until the entire array is sorted.
 
 ### 2b. Pseudocode for each parallel algorithm
+Merge sort  
+```
+Function mergeSort(array a, temp array b, left, right):
+    If left < right:
+        mid = (left + right) / 2
+        Call mergeSort(a, b, left, mid)
+        Call mergeSort(a, b, mid + 1, right)
+        Call merge(a, b, left, mid, right)
+
+Function merge(array a, temp array b, left, mid, right):
+    Initialize h = left, i = left, j = mid + 1
+    While h <= mid and j <= right:
+        If a[h] <= a[j], set b[i] = a[h] and increment h
+        Else set b[i] = a[j] and increment j
+        Increment i
+    Copy remaining elements from a[j to right] or a[h to mid] into b[i to end]
+    Copy elements from b[left to right] back to a
+
+Main:
+    Allocate original_array of size n
+
+    Initialize MPI
+    Get world_rank and world_size
+
+    Calculate size = n / world_size (subarray size for each process)
+    Allocate sub_array for each process
+
+    Scatter original_array to all processes:
+        MPI_Scatter(original_array, size, sub_array, size, 0)
+
+    Perform mergeSort on sub_array:
+        Allocate tmp_array
+        Call mergeSort(sub_array, tmp_array, 0, size - 1)
+
+    Gather sorted subarrays at rank 0:
+        MPI_Gather(sub_array, size, sorted_array, size, 0)
+
+    If world_rank == 0:
+        Allocate other_array
+        Call mergeSort on sorted_array to combine all parts into a final sorted array
+        Print sorted array
+
+    Free allocated memory for original_array, sub_array, tmp_array
+    Finalize MPI
+```
+
 Bitonic sort  
 ```
 Main:
