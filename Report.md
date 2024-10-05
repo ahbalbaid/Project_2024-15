@@ -132,6 +132,67 @@ Function radix_sort(local_data, num_procs, rank):
     
     Receive numbers from other processes and update (local_data)
 ```
+Sample Sort
+```
+function Sample_Sort(arr[1..n], num_buckets, p):
+        1. Initialize MPI
+        - MPI.Init()
+        - Get rank of the current process and num_processes
+        - Get the segment size -> segment_size = n / num_processes
+
+
+        2. Scatter the array A across all processes
+        - local_segment = MPI_Scatter(A, segment_size, root=0)
+        - Processes now have a portion of arr('local_segment')
+
+
+        3. Sort the local segment using a appropriate sorting algorithm 
+        - Sort local_segment
+
+
+        4. Select S samples from local segments
+        - samples_local = []
+        - Randomly select '(p−1) * num_buckets' elements from local_segment as samples
+        - samples_all = MPI_Gather(samples_local, root=0) - gathers all samples at root processes
+
+
+        5. Root process sorts samples and selects splitters
+        - if rank == 0:
+            - Sort 'samples_all' using a appropriate sorting algorithm 
+            - Determine splitters: [s0, s1, ..., sp] <- [-∞, Sk, S2k, ..., S(p−1)k, ∞]
+        - splitters = MPI_Bcast(splitters, root=0) - Broadcasting splitters to all processes
+
+
+        6. Partition elements into buckets based on splitters
+        - Initialize local_buckets = [] * num_buckets
+        - for each a in local_segment:
+            - Find j such that splitters[j-1] < a <= splitters[j]
+            - Place a in local_buckets[j]
+
+
+        7. Redistribute buckets among processes
+        - Prepare 'send_counts' and 'send_displacements' for 'local_buckets'
+        - Use MPI_Alltoallv to exchange elements such that each process receives a global bucket
+        - Each process now holds one bucket (global_bucket) which contains all elements within a specific range
+
+
+        8. Sort each bucket locally
+        - Sort global_bucket using a appropriate sorting algorithm 
+
+
+        9. Gather sorted buckets at the root process
+        - sorted_buckets_all = MPI_Gather(global_bucket, root=0)
+
+
+        10. Root process concatenates sorted buckets to form the final sorted array
+        - if rank == 0:
+            - final_sorted_array = concatenate(sorted_buckets_all)
+            - return final_sorted_array
+
+
+        11. Finalize MPI environment
+        - MPI_Finalize()
+```
 
 ### 2c. Evaluation plan - what and how will you measure and compare
 
