@@ -65,20 +65,20 @@ Main:
 
 Function radix_sort(local_data, num_procs, rank):
   max_num = max(local_data)
-  num_digits = get_max_digits(max_num)
+  num_digits = len(str(max_num))
 
   for digit in range(num_digits):
     
     Initialize array (count) of size 10 to zero
 
-    for number in data:
+    for number in local_data:
       # Extract digit from (digit) position of the number and increment count array
       count[int(str(number)[digit])]++
 
     global_count = reduce(global_count, count)
     Get and Compute global offsets (global_offsets)
 
-    for number in data:
+    for number in local_data:
       # Extract digit from (digit) position of the number
       number_digit = int(str(number)[digit])
       Get target processor for this number based on (global_offsets)
