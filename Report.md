@@ -1,24 +1,57 @@
 # CSCE 435 Group project
 
-## 0. Group number: 
+## 0. Group number: 15
 
 ## 1. Group members:
-1. First
-2. Second
-3. Third
-4. Fourth
+1. Edgar Garcia-Doria
+2. Abdullah Balbaid
+3. Sahil Dhana
+4. Andy Callahan
 
-## 2. Project topic (e.g., parallel sorting algorithms)
+## 2. Project topic: Parallel sorting algorithms
 
-### 2a. Brief project description (what algorithms will you be comparing and on what architectures)
+### 2a. Description
+Our team will communicate through Discord. 
 
-- Bitonic Sort:
-- Sample Sort:
-- Merge Sort:
-- Radix Sort:
+We will emplement:
+- Bitonic Sort: A bitonic sequence is a series of elements that are monotonically increasing then decreasing. The algorithm forms a bitonic sequence from an unordered sequence starting with a size of two (default bitonic). Then, the algorithm recursively merges pairs of bitonic sequences together to sort the elements.
+- Sample Sort: Sorting algorithm that is a generalization of quicksort. It divides an array into small segments then sorts each segment. Once each segment is sorted it uses “samples” from each segment to determine partition boundaries/splitters, which then distributes all the data into sorted buckets. Buckets are then sorted independently and merged to create a final sorted array, which makes it an appropriate algorithm for parallel processing.
+- Merge Sort: Sorting algorithm that uses the divide-and-conquer strategy. It splits the array into smaller halves, continues to divide the halves until each subarray has only one item, and finally compares the smaller subarrays and combines their results into a sorted array.
+- Quicksort
 
 ### 2b. Pseudocode for each parallel algorithm
-- For MPI programs, include MPI calls you will use to coordinate between processes
+Bitonic sort  
+```
+Main:
+  Initialize MPI 
+  Get number of processes and current rank
+  Create initial input array
+  Scatter array in chunks to worker processes
+  Call bitonic_sort on each process
+  When sorting has finished gather all sub-arrays
+
+Function bitonic_sort():
+  Sequential sort the local data (quicksort)
+  Let d = number of stages (log_2 (number of processors))
+  for i:=0 to d - 1 do:
+    for j:=i down to 0 do
+      if (i+1) bit of process rank = jth bit of rank then
+        comp_exchange_max(j)
+      else
+        comp_exchange_min(j)
+
+Function comp_exchange_max(j)
+	Paired process rank = current rank xor 1 << j
+	Send elements to paired process
+	Receive elements from paired process
+	Merge the higher elements
+
+Function comp_exchange_min(j)
+	Paired process rank = current rank xor 1 << j
+	Send elements to paired process
+	Receive elements from paired process
+	Merge the lower elements
+```
 
 ### 2c. Evaluation plan - what and how will you measure and compare
 - Input sizes, Input types
