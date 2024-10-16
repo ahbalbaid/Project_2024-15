@@ -133,6 +133,10 @@ ParallelRadixSort(arr):
     return arr
 ```
 
+This parallel radix sort algorithm sorts an array by processing it bit by bit, starting from the least significant bit. It uses multiple processors to speed up the sorting. First, it identifies the largest number in the array to determine the maximum number of bits needed for comparison. The master processor broadcasts the current bit position (digit) to all worker processors, which then divide the array for parallel processing.
+
+Each processor checks its portion of the array, mapping whether each element has a 0 or 1 at the current bit. Numbers with a 0 are placed in one list (stack of zeros), while those with a 1 go into another (remaining of ones). After this classification, results from all processors are gathered, and the array is updated by combining the lists. This process is repeated for each bit until the array is sorted. The parallelization allows the algorithm to handle large datasets efficiently.
+
 Radix Sort github: https://github.com/naps62/parallel-sort/blob/master/src/radix.mpi.cpp
 ```
 ParallelRadixSort(arr, id, num_processes, num_bits_per_pass):
