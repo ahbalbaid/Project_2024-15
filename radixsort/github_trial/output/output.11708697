@@ -1,0 +1,18 @@
+
+Inactive Modules:
+  1) UCX/1.9.0     2) numactl/2.0.13
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) binutils/2.35     2) zlib/1.2.11
+
+The following have been reloaded with a version change:
+  1) GCCcore/10.2.0 => GCCcore/8.3.0
+
+mask size = 4
+
+starting radix sort...finished
+
+TEST: PASSED
+
+Process 0 finished.
+Process 1 finished.

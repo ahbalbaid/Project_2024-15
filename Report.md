@@ -101,37 +101,77 @@ Function comp_exchange_min(j)
 
 Radix Sort
 ```
-Main:
-  Initialize MPI
-  Get number of processes and current rank
-  Create initial input array
-  Scatter array in chunks to worker processes
-  Call radix_sort on each process
-  When sorting has finished gather all sub-arrays
+ParallelRadixSort(arr):
+    if length(arr) <= 1:
+        return arr
 
-Function radix_sort(local_data, num_procs, rank):
-  max_num = max(local_data)
-  num_digits = len(str(max_num))
-
-  for digit in range(num_digits):
+    max_digit = number of bits in the largest number in arr
     
-    Initialize array (count) of size 10 to zero
+    // Master Processor
+    for d = max_digit-1 down to 0 do:
+        // Broadcast the current digit position `d` to all processors
 
-    for number in local_data:
-      # Extract digit from (digit) position of the number and increment count array
-      count[int(str(number)[digit])]++
+        // Split the array among worker processors
+        // Each processor computes which numbers have `0` at digit `d`
+        places = Map each element in arr to True if bit `d` is 0, otherwise False
 
-    global_count = reduce(global_count, count)
-    Get and Compute global offsets (global_offsets)
+        // Initialize two lists, stack (for 0s) and remaining (for 1s)
+        stack = empty list
+        remaining = empty list
 
-    for number in local_data:
-      # Extract digit from (digit) position of the number
-      number_digit = int(str(number)[digit])
-      Get target processor for this number based on (global_offsets)
-      Send the number to its target processor
-    
-    Receive numbers from other processes and update (local_data)
+        // Each processor classifies its part of arr based on places
+        for each index idx in places:
+            if places[idx] == True:
+                Add arr[idx] to stack
+            else:
+                Add arr[idx] to remaining
+        
+        // Combine results from all processors (gather stack and remaining)
+        arr = stack concatenated with remaining
+
+    return arr
 ```
+
+Radix Sort github: https://github.com/naps62/parallel-sort/blob/master/src/radix.mpi.cpp
+```
+ParallelRadixSort(arr, id, num_processes, num_bits_per_pass):
+    # Initialize constants
+    num_buckets = 2^num_bits_per_pass  # total number of buckets
+    buckets_per_processor = num_buckets / num_processes  # number of buckets each processor handles
+    mask = (1 << num_bits_per_pass) - 1  # mask for extracting key bits
+
+    # Initialize data structures for buckets and counts
+    buckets = array of empty lists, size num_buckets
+    bucket_counts = 2D array to track count of elements per bucket and processor
+    bucket_accum = 2D array to track positions for placing elements in the final sorted array
+    bucket_sizes = array for storing bucket sizes per processor
+
+    # Main loop for sorting based on each set of bits
+    while mask != 0:
+        # Reset bucket counts and clear buckets
+        Reset bucket counts and empty buckets
+
+        # Distribute elements into buckets based on the current bits (using mask)
+        for each element in arr:
+            determine the appropriate bucket for the element
+            add element to the bucket
+            update bucket count
+
+        # Share and combine bucket counts across all processes
+
+        # Calculate positions (bucket_accum) for each element in the final sorted array
+
+        # Send bucket elements to corresponding processors based on bucket allocation
+
+        # Receive elements from other processors and place them in the correct positions
+
+        # Update the array for the next pass
+        arr = combined data from all buckets for this processor
+        shift the mask to process the next set of bits
+
+    return arr
+```
+
 Sample Sort
 ```
 function Sample_Sort(arr[1..n], num_buckets, p):
