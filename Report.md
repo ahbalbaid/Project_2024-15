@@ -67,6 +67,8 @@ Main:
 ```
 The array to be sorted is divided among multiple cores, and each core is assigned a sub-array to perform the merge sort in parallel. The process begins with the master core distributing sub-arrays to each core via MPI_Scatter. Each core independently sorts its assigned sub-array using merge sort. After sorting, the sub-arrays are gathered back to the master core using MPI_Gather, where a final merge step combines the sorted sub-arrays into a fully sorted array.
 
+<img width="1018" alt="Screenshot 2024-10-16 at 9 58 50 PM" src="https://github.com/user-attachments/assets/d074d70f-f20e-4c63-90ee-c22beb124979">
+
 Bitonic sort  
 ```
 Main:
@@ -137,6 +139,8 @@ This parallel radix sort algorithm sorts an array by processing it bit by bit, s
 
 Each processor checks its portion of the array, mapping whether each element has a 0 or 1 at the current bit. Numbers with a 0 are placed in one list (stack of zeros), while those with a 1 go into another (remaining of ones). After this classification, results from all processors are gathered, and the array is updated by combining the lists. This process is repeated for each bit until the array is sorted. The parallelization allows the algorithm to handle large datasets efficiently.
 
+![Screenshot 2024-10-16 at 9 58 59 PM](https://github.com/user-attachments/assets/e2867ffa-2b97-47a5-8008-e3a87c9dd825)
+
 Radix Sort github: https://github.com/naps62/parallel-sort/blob/master/src/radix.mpi.cpp
 ```
 ParallelRadixSort(arr, id, num_processes, num_bits_per_pass):
@@ -176,6 +180,8 @@ ParallelRadixSort(arr, id, num_processes, num_bits_per_pass):
 
     return arr
 ```
+
+<img width="1064" alt="Screenshot 2024-10-16 at 9 53 53 PM" src="https://github.com/user-attachments/assets/ab69a030-929a-4fe1-add7-38a9c48b28f0">
 
 Sample Sort
 ```
