@@ -101,6 +101,7 @@ Function comp_exchange_min(j)
 	Receive elements from paired process
 	Merge the lower elements
 ```
+![Screenshot 2024-10-16 221318](https://github.com/user-attachments/assets/d4170c69-adbd-42f6-b5aa-89b834e6acef)
 
 Radix Sort
 ```
