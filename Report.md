@@ -67,6 +67,8 @@ Main:
 ```
 The array to be sorted is divided among multiple cores, and each core is assigned a sub-array to perform the merge sort in parallel. The process begins with the master core distributing sub-arrays to each core via MPI_Scatter. Each core independently sorts its assigned sub-array using merge sort. After sorting, the sub-arrays are gathered back to the master core using MPI_Gather, where a final merge step combines the sorted sub-arrays into a fully sorted array.
 
+<img width="1018" alt="Screenshot 2024-10-16 at 9 58 50 PM" src="https://github.com/user-attachments/assets/d074d70f-f20e-4c63-90ee-c22beb124979">
+
 Bitonic sort  
 ```
 Main:
