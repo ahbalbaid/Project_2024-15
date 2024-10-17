@@ -1,4 +1,4 @@
-# CSCE 435 Group project
+<img width="1010" alt="image" src="https://github.com/user-attachments/assets/5b7d7995-8f9a-486c-a8d1-6c5851763976"># CSCE 435 Group project
 
 ## 0. Group number: 15
 
@@ -238,6 +238,8 @@ function Sample_Sort(arr[1..n], num_buckets, p):
         11. Finalize MPI environment
         - MPI_Finalize()
 ```
+<img width="1010" alt="image" src="https://github.com/user-attachments/assets/ba218105-50df-4529-8d67-bb16f3087b5b">
+
 
 ### 2c. Evaluation plan - what and how will you measure and compare
 
