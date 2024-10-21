@@ -68,8 +68,16 @@ Main:
 The array to be sorted is divided among multiple cores, and each core is assigned a sub-array to perform the merge sort in parallel. The process begins with the master core distributing sub-arrays to each core via MPI_Scatter. Each core independently sorts its assigned sub-array using merge sort. After sorting, the sub-arrays are gathered back to the master core using MPI_Gather, where a final merge step combines the sorted sub-arrays into a fully sorted array.
 
 <img width="1018" alt="Screenshot 2024-10-16 at 9 58 50 PM" src="https://github.com/user-attachments/assets/d074d70f-f20e-4c63-90ee-c22beb124979">
-![avg - whole](https://github.com/user-attachments/assets/a61b566e-585c-44fc-bdcf-560be530f89c)
 
+<img width="886" alt="avg - whole" src="https://github.com/user-attachments/assets/5940e54b-ea36-4af5-956d-c4d5c79c328b">
+<img width="886" alt="avg - create" src="https://github.com/user-attachments/assets/4cff629b-1e10-4d14-a490-c549d8afd9d7">
+<img width="886" alt="avg - scatter" src="https://github.com/user-attachments/assets/0f636bf7-9b3a-4f14-9bd8-51c9e766adfe">
+<img width="886" alt="avg -merging" src="https://github.com/user-attachments/assets/3cb150ab-16ec-4b9f-896b-5aaf1db01eb7">
+<img width="886" alt="avg - gather" src="https://github.com/user-attachments/assets/2060854e-5e82-410a-bc7e-d6f4d047a0a1">
+<img width="886" alt="avg - validate" src="https://github.com/user-attachments/assets/924f5a8c-d060-4a9b-bd4b-cec78c29c100">
+
+<img width="886" alt="max-whole" src="https://github.com/user-attachments/assets/fb75f9fb-977f-4301-bad0-3ae774a725ca">
+<img width="886" alt="max - merge" src="https://github.com/user-attachments/assets/96427764-c97d-43ae-b27c-ff8d6bf3bf2a">
 
 
 
