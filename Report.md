@@ -505,7 +505,11 @@ TBD
 
 
 #### **Random Arrays**
-Avg time graphs
+
+As you increase the number of processes, the computation time goes down because the workload is spread across more processors, meaning each one handles less data, so the processing gets faster. For communication time, it initially decreases since each process has fewer data to send and receive. But with MPI calls like MPI_Alltoall, communication time can actually start increasing. This happens because as you add more processes, each one needs to communicate with more others. So even though they’re dealing with smaller chunks of data, there are more processes exchanging messages, which adds overhead and leads to higher communication time in those specific MPI calls.
+
+
+Avg. time graphs
 ![image](https://github.com/user-attachments/assets/e9414b73-f23a-47df-a49b-374488396e02)
 ![image](https://github.com/user-attachments/assets/fdeda8bd-6076-4e3e-a431-99e7395df84e)
 ![image](https://github.com/user-attachments/assets/f177c026-c58b-4c4d-b08e-baf253a1ce40)
