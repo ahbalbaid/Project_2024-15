@@ -498,3 +498,39 @@ The worker function scaled well with more processors.
 
 #### **1% Perturbed Arrays**
 TBD
+
+
+
+### Sample Sort
+
+
+#### **Random Arrays**
+Avg time graphs
+![image](https://github.com/user-attachments/assets/e9414b73-f23a-47df-a49b-374488396e02)
+![image](https://github.com/user-attachments/assets/fdeda8bd-6076-4e3e-a431-99e7395df84e)
+![image](https://github.com/user-attachments/assets/f177c026-c58b-4c4d-b08e-baf253a1ce40)
+![image](https://github.com/user-attachments/assets/7188f8d0-66a9-48f7-a4de-5c8a35f7e01b)
+
+Max graphs
+![image](https://github.com/user-attachments/assets/f0a8c1cb-6a97-4daf-ab06-255aa7b0665e)
+![image](https://github.com/user-attachments/assets/62ac73f5-46d6-41cd-b102-1e3f41a6be9a)
+
+Min Graphs
+![image](https://github.com/user-attachments/assets/1e064449-11a9-43a6-99f1-5bd29884b230)
+![image](https://github.com/user-attachments/assets/e3299819-e997-4cee-a287-2389cd9d5911)
+
+
+
+
+
+#### **Sorted Arrays**
+TBD - jobs currently running
+
+
+#### **Reverse Sorted Arrays**
+TBD - jobs currently running
+
+
+
+#### **1% Perturbed Arrays**
+TBD - jobs currently running
