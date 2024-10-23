@@ -67,6 +67,7 @@ Main:
 ```
 The array to be sorted is divided among multiple cores, and each core is assigned a sub-array to perform the merge sort in parallel. The process begins with the master core distributing sub-arrays to each core via MPI_Scatter. Each core independently sorts its assigned sub-array using merge sort. After sorting, the sub-arrays are gathered back to the master core using MPI_Gather, where a final merge step combines the sorted sub-arrays into a fully sorted array.
 
+Random Array\
 <img width="1018" alt="Screenshot 2024-10-16 at 9 58 50 PM" src="https://github.com/user-attachments/assets/d074d70f-f20e-4c63-90ee-c22beb124979">
 
 <img width="886" alt="avg - whole" src="https://github.com/user-attachments/assets/5940e54b-ea36-4af5-956d-c4d5c79c328b">
@@ -78,7 +79,9 @@ The array to be sorted is divided among multiple cores, and each core is assigne
 
 <img width="886" alt="max-whole" src="https://github.com/user-attachments/assets/fb75f9fb-977f-4301-bad0-3ae774a725ca">
 <img width="886" alt="max - merge" src="https://github.com/user-attachments/assets/96427764-c97d-43ae-b27c-ff8d6bf3bf2a">
+Here we can see that the average time for each thread for whole function goes down. This can be explained since each worker thread has less computation to do, which goes hand in hand with the merging graph, which also goes down as the number of processors goes up. The array creation time should be the same since there is only one process doing the creation. MPI Scatter seems to follow a downwards - trend, this could be explained by the time required to send smaller chunks of data is generally lower than sending larger chunks, which can reduce the overall communication time. The whole function max time, which is held by the master process staying nearly the same is due to the master process having to perform a final merge sort call with the chunk sorted array at the end. However, the max time of merging is downwards because workers have a smaller chunk to compute as the processor count goes up and is divided amongst more processors. 
 
+Merging refers to comp and Gather / Scatter refer to comm, these can be renamed in future submissions once Grace is up. 
 Sorted Array\
 In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
 ![avg - whole](https://github.com/user-attachments/assets/006fbe41-d66c-4fcd-b767-0d56e5ce2dfe)
@@ -89,8 +92,7 @@ In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather
 ![avg - validation](https://github.com/user-attachments/assets/e9d86d8f-2219-4590-ac9e-78ce5d1dde87)
 ![max - whole](https://github.com/user-attachments/assets/22dd5f6d-6d6c-4fe7-be3c-af820f6b8810)
 ![max - merging](https://github.com/user-attachments/assets/9b3b48d0-f6a0-42ce-bba8-25aa2df6f06b)
-
-
+The sorted array follows the same trends as the random array. \
 
 Reverse Sorted Array\
 In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
@@ -103,9 +105,13 @@ In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather
 ![max - whole](https://github.com/user-attachments/assets/49965886-28fb-423c-b8b7-255a7f7a9df2)
 ![max - merge](https://github.com/user-attachments/assets/179861c3-a46b-46a9-a8aa-d4b8ad2fc5b4)
 
+The reverse sorted array follows the same trends as the random array. \
+
+
 
 1% Perturbed Array
 In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
+Not able to submit yet since grace is not processing any jobs at the time of report submission. 
 
 Bitonic sort  
 ```
