@@ -67,6 +67,55 @@ Main:
 ```
 The array to be sorted is divided among multiple cores, and each core is assigned a sub-array to perform the merge sort in parallel. The process begins with the master core distributing sub-arrays to each core via MPI_Scatter. Each core independently sorts its assigned sub-array using merge sort. After sorting, the sub-arrays are gathered back to the master core using MPI_Gather, where a final merge step combines the sorted sub-arrays into a fully sorted array.
 
+
+Merging refers to comp and Gather / Scatter refer to comm, these can be renamed in future submissions once Grace is up.\
+Random Array\
+<img width="1018" alt="Screenshot 2024-10-16 at 9 58 50 PM" src="https://github.com/user-attachments/assets/d074d70f-f20e-4c63-90ee-c22beb124979">
+
+<img width="886" alt="avg - whole" src="https://github.com/user-attachments/assets/5940e54b-ea36-4af5-956d-c4d5c79c328b">
+<img width="886" alt="avg - create" src="https://github.com/user-attachments/assets/4cff629b-1e10-4d14-a490-c549d8afd9d7">
+<img width="886" alt="avg - scatter" src="https://github.com/user-attachments/assets/0f636bf7-9b3a-4f14-9bd8-51c9e766adfe">
+<img width="886" alt="avg -merging" src="https://github.com/user-attachments/assets/3cb150ab-16ec-4b9f-896b-5aaf1db01eb7">
+<img width="886" alt="avg - gather" src="https://github.com/user-attachments/assets/2060854e-5e82-410a-bc7e-d6f4d047a0a1">
+<img width="886" alt="avg - validate" src="https://github.com/user-attachments/assets/924f5a8c-d060-4a9b-bd4b-cec78c29c100">
+
+<img width="886" alt="max-whole" src="https://github.com/user-attachments/assets/fb75f9fb-977f-4301-bad0-3ae774a725ca">
+<img width="886" alt="max - merge" src="https://github.com/user-attachments/assets/96427764-c97d-43ae-b27c-ff8d6bf3bf2a">
+
+Here we can see that the average time for each thread for whole function goes down. This can be explained since each worker thread has less computation to do, which goes hand in hand with the merging graph, which also goes down as the number of processors goes up. The array creation time should be the same since there is only one process doing the creation. MPI Scatter seems to follow a downwards - trend, this could be explained by the time required to send smaller chunks of data is generally lower than sending larger chunks, which can reduce the overall communication time. The whole function max time, which is held by the master process staying nearly the same is due to the master process having to perform a final merge sort call with the chunk sorted array at the end. However, the max time of merging is downwards because workers have a smaller chunk to compute as the processor count goes up and is divided amongst more processors. 
+
+Sorted Array\
+In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
+![avg - whole](https://github.com/user-attachments/assets/006fbe41-d66c-4fcd-b767-0d56e5ce2dfe)
+![avg - create](https://github.com/user-attachments/assets/4c9cc395-1e48-4414-a4e7-4d65d8aea8d3)
+![avg - scatter](https://github.com/user-attachments/assets/c9a12aac-8d7d-4739-b1d2-e030b1f5e959)
+![avg - merging](https://github.com/user-attachments/assets/3b34e982-fd41-4d36-bddf-a57ead286ef6)
+![avg - gather](https://github.com/user-attachments/assets/2f44c1cc-b7e0-40fa-9a97-7d4a9f56fe0c)
+![avg - validation](https://github.com/user-attachments/assets/e9d86d8f-2219-4590-ac9e-78ce5d1dde87)
+![max - whole](https://github.com/user-attachments/assets/22dd5f6d-6d6c-4fe7-be3c-af820f6b8810)
+![max - merging](https://github.com/user-attachments/assets/9b3b48d0-f6a0-42ce-bba8-25aa2df6f06b)
+
+The sorted array follows the same trends as the random array. 
+
+Reverse Sorted Array\
+In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
+![avg - whole](https://github.com/user-attachments/assets/20c83f27-6ee3-4244-9fe8-f5612d040432)
+![avg - create](https://github.com/user-attachments/assets/0da2e03d-2f72-4591-af4a-ca0c5ba864fd)
+![avg - scatter](https://github.com/user-attachments/assets/d7b0fd74-f222-4ec5-8a77-c592146933d9)
+![avg - merging](https://github.com/user-attachments/assets/56421664-679f-4183-b538-5d9f57d9dc48)
+![avg - gather](https://github.com/user-attachments/assets/1f5a7a47-1f38-4b14-8988-24d28c035f04)
+![avg - valid](https://github.com/user-attachments/assets/1ecce638-8599-41eb-a5a6-a70d8df4a3f9)
+![max - whole](https://github.com/user-attachments/assets/49965886-28fb-423c-b8b7-255a7f7a9df2)
+![max - merge](https://github.com/user-attachments/assets/179861c3-a46b-46a9-a8aa-d4b8ad2fc5b4)
+
+The reverse sorted array follows the same trends as the random array. 
+
+
+
+1% Perturbed Array
+In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
+Not able to submit yet since grace is not processing any jobs at the time of report submission. 
+
 Bitonic sort  
 ```
 Main:
@@ -99,6 +148,7 @@ Function comp_exchange_min(j)
 	Receive elements from paired process
 	Merge the lower elements
 ```
+![Screenshot 2024-10-16 221318](https://github.com/user-attachments/assets/d4170c69-adbd-42f6-b5aa-89b834e6acef)
 
 Radix Sort
 ```
@@ -136,6 +186,8 @@ ParallelRadixSort(arr):
 This parallel radix sort algorithm sorts an array by processing it bit by bit, starting from the least significant bit. It uses multiple processors to speed up the sorting. First, it identifies the largest number in the array to determine the maximum number of bits needed for comparison. The master processor broadcasts the current bit position (digit) to all worker processors, which then divide the array for parallel processing.
 
 Each processor checks its portion of the array, mapping whether each element has a 0 or 1 at the current bit. Numbers with a 0 are placed in one list (stack of zeros), while those with a 1 go into another (remaining of ones). After this classification, results from all processors are gathered, and the array is updated by combining the lists. This process is repeated for each bit until the array is sorted. The parallelization allows the algorithm to handle large datasets efficiently.
+
+![Screenshot 2024-10-16 at 9 58 59 PM](https://github.com/user-attachments/assets/e2867ffa-2b97-47a5-8008-e3a87c9dd825)
 
 Radix Sort github: https://github.com/naps62/parallel-sort/blob/master/src/radix.mpi.cpp
 ```
@@ -176,6 +228,8 @@ ParallelRadixSort(arr, id, num_processes, num_bits_per_pass):
 
     return arr
 ```
+
+<img width="1064" alt="Screenshot 2024-10-16 at 9 53 53 PM" src="https://github.com/user-attachments/assets/ab69a030-929a-4fe1-add7-38a9c48b28f0">
 
 Sample Sort
 ```
@@ -238,16 +292,18 @@ function Sample_Sort(arr[1..n], num_buckets, p):
         11. Finalize MPI environment
         - MPI_Finalize()
 ```
+<img width="1010" alt="image" src="https://github.com/user-attachments/assets/ba218105-50df-4529-8d67-bb16f3087b5b">
+
 
 ### 2c. Evaluation plan - what and how will you measure and compare
 
 - **Input sizes, Input types**
 
-We'll test the algorithm with various input sizes to evaluate its performance on small and large datasets. The input types will include random integers, sorted arrays, and reverse-sorted arrays to see how the algorithm handles different data scenarios. Various input sizes would include powers of two which would be 2^10, 2^14, .... , 2^26 to understand the scalability of the algorithms.
+We'll test the algorithm with various input sizes to evaluate its performance on small and large datasets. The input types will include random integers, sorted arrays, and reverse-sorted arrays to see how the algorithm handles different data scenarios. Various input sizes would include powers of two which would be 2^16, 2^18, 2^20, 2^22, 2^24, 2^26, 2^28 to understand the scalability of the algorithms.
 
 - **Strong scaling**
 
-We'll measure how the execution time changes when we increase the number of processors while keeping the problem size the same. This will show us how efficiently the algorithm scales with more processors. MPI processes for the identical inputs would include 2, 4, 8, 16, 32, 64, 128, 256, ... , 1024 to measure execution times. While doing this we would also test various inputs sizes as mentioned above.
+We'll measure how the execution time changes when we increase the number of processors while keeping the problem size the same. This will show us how efficiently the algorithm scales with more processors. MPI processes for the identical inputs would include 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024 to measure execution times. While doing this we would also test various inputs sizes as mentioned above.
 
 - **Weak scaling**
 
