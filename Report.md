@@ -322,8 +322,10 @@ TBD
 #### **Reverse Sorted Arrays**
 TBD
 #### **Random Input Arrays**
-TBD
-![image](https://github.com/user-attachments/assets/38bdc929-40f1-4444-9d95-4424413d4f94)
+![image](https://github.com/user-attachments/assets/d044647a-4124-4f1d-bd26-4ebee97fbed7)
+![image](https://github.com/user-attachments/assets/32d25f54-8d79-424f-9028-fdf464c5a9c2)
+![image](https://github.com/user-attachments/assets/daf131b9-7b12-4c7d-950a-49bf23b5e803)
+
 #### **1% Perturbed Arrays**
 TBD
 
