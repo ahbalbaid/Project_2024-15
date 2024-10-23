@@ -493,3 +493,6 @@ The worker function scaled well with more processors.
     - **Regular Scale**:
 
     ![Worker Function Max](./radixsort/final_trial/sorted_array/plot/max/worker_function.png)
+
+#### **1% Perturbed Arrays**
+TBD
