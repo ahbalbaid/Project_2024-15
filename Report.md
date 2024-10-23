@@ -315,6 +315,18 @@ The reverse sorted array follows the same trends as the random array.
 In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
 Not able to submit yet since grace is not processing any jobs at the time of report submission. 
 
+### Bitonic Sort
+Caliper files: 8/280. The rest of the jobs are pending.
+#### **Sorted Arrays**
+TBD
+#### **Reverse Sorted Arrays**
+TBD
+#### **Random Input Arrays**
+TBD
+![image](https://github.com/user-attachments/assets/38bdc929-40f1-4444-9d95-4424413d4f94)
+#### **1% Perturbed Arrays**
+TBD
+
 ### Radix Sort
 We couldn't run tests with 1024 processors because Grace had a proxy error. Plus, the queue was really long, so we were only able to test with random input arrays, reversed arrays, and mostly sorted ones. To keep things simple, we focused on the most important plots and based our observations on those.
 
