@@ -316,20 +316,20 @@ In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather
 Not able to submit yet since grace is not processing any jobs at the time of report submission. 
 
 ### Radix Sort
-We were unable to run tests with 1024 processors due to a proxy error from Grace. Additionally, because of the long queue, we were only able to perform tasks on a random input array, a reversed array, and a mostly sorted array. For the sake of clarity, we focused on the most significant plots and based our observations on them.
+We couldn't run tests with 1024 processors because Grace had a proxy error. Plus, the queue was really long, so we were only able to test with random input arrays, reversed arrays, and mostly sorted ones. To keep things simple, we focused on the most important plots and based our observations on those.
 
 #### **Random Input Arrays**
-The plots indicate that the overall performance of the parallel radix sort is efficient, particularly with larger arrays. However, for smaller arrays, communication bottlenecks tend to impact performance.
+The plots show that parallel radix sort works well, especially with larger arrays. But for smaller ones, communication slows things down.
 
 ##### **Array Creation**
-- **Max**: The maximum time for creating random input arrays remained flat as the number of processors increased.
-    
+- **Max**: The maximum time to create random arrays stayed about the same, no matter how many processors we used.
+
     ![Array Creation Max Log Scale](./radixsort/final_trial/random_array/plot/max/array_creation_log.png)
     
 
 ##### **Master Function**
   
-- **Max**: The max execution time of the master function decreased with increasing processors for larger input arrays, but for smaller arrays, there was some fluctuations.
+- **Max**: The max execution time for the master function went down as we added more processors for bigger arrays, but smaller arrays showed some ups and downs.
 
     - **Log Scale**:
 
@@ -342,15 +342,14 @@ The plots indicate that the overall performance of the parallel radix sort is ef
 
 ##### **Sort Validation**
 
-
-- **Max**: The maximum time for validating the sorted array remained flat as the number of processors increased.
+- **Max**: The time it took to validate the sorted arrays stayed consistent as the processor count went up.
 
     ![Sort Validation Max Log Scale](./radixsort/final_trial/random_array/plot/max/sort_validation_log.png)
 
 ##### **Whole Function**
-The whole function performance showed improvement in execution time as processors increased, especially for larger arrays.
+The whole function performed better as more processors were added, particularly with bigger arrays.
   
-- **Max**: The maximum execution time was seen with the largest arrays and lower processor counts, with marginal improvements beyond a certain processor communication threshold.
+- **Max**: The max execution time was highest with the biggest arrays and fewer processors, but after a certain point, adding more processors didn't help much.
 
     - **Log Scale**:
 
@@ -362,9 +361,9 @@ The whole function performance showed improvement in execution time as processor
   
 
 ##### **Worker Function**
-The worker function, which handles much of the distributed processing, demonstrated reasonable scaling with increased processor counts.
+The worker function, which does most of the distributed work, scaled reasonably well with more processors.
   
-- **Max**: The maximum time for worker function execution decreased significantly as the number of processors increased for larger arrays. However, smaller arrays did not benefit as much from the increased parallelism because of the communication bottleneck.
+- **Max**: The time for worker function execution dropped noticeably with more processors for bigger arrays. Smaller arrays, though, didn’t benefit as much because of the communication overhead.
 
     - **Log Scale**:
 
@@ -377,14 +376,14 @@ The worker function, which handles much of the distributed processing, demonstra
 #### **Reversed Input Arrays**
 
 ##### **Array Creation**
-- **Max**: The maximum time for creating reversed input arrays remained flat as the number of processors increased.
+- **Max**: Similar to random arrays, the time to create reversed arrays didn’t change much with more processors.
     
     ![Array Creation Max Log Scale](./radixsort/final_trial/reversed_array/plot/max/array_creation_log.png)
     
 
 ##### **Master Function**
   
-- **Max**: The max execution time of the master function decreased with increasing processors for larger input arrays, but for smaller arrays, there was some fluctuations.
+- **Max**: The master function’s max time decreased as we added more processors, especially for large arrays, though there were some inconsistencies with smaller arrays.
 
     - **Log Scale**:
 
@@ -397,14 +396,14 @@ The worker function, which handles much of the distributed processing, demonstra
 
 ##### **Sort Validation**
 
-- **Max**: The maximum time for validating the sorted array remained flat as the number of processors increased.
+- **Max**: The validation time stayed flat as processor counts increased.
 
     ![Sort Validation Max Log Scale](./radixsort/final_trial/reversed_array/plot/max/sort_validation_log.png)
 
 ##### **Whole Function**
-The whole function performance showed improvement in execution time as processors increased, especially for larger arrays.
+The whole function showed better performance with more processors, especially for large arrays.
   
-- **Max**: The maximum execution time was seen with the largest arrays and lower processor counts, with marginal improvements beyond a certain processor communication threshold.
+- **Max**: We saw the longest execution times with the biggest arrays and fewer processors, with smaller improvements after a certain point.
 
     - **Log Scale**:
 
@@ -416,9 +415,9 @@ The whole function performance showed improvement in execution time as processor
   
 
 ##### **Worker Function**
-The worker function, which handles much of the distributed processing, demonstrated reasonable scaling with increased processor counts.
+The worker function scaled well with more processors.
   
-- **Max**: The maximum time for worker function execution decreased significantly as the number of processors increased for larger arrays. However, smaller arrays did not benefit as much from the increased parallelism because of the communication bottleneck.
+- **Max**: Worker function execution times dropped a lot with larger arrays and more processors, but for smaller arrays, the improvement was limited due to communication delays.
 
     - **Log Scale**:
 
@@ -428,3 +427,57 @@ The worker function, which handles much of the distributed processing, demonstra
 
     ![Worker Function Max](./radixsort/final_trial/reversed_array/plot/max/worker_function.png)
 
+#### **Sorted Input Arrays**
+Since the algorithm doesn’t check if the array is already sorted, the performance was similar to the other input types.
+
+##### **Array Creation**
+- **Max**: The time for creating sorted arrays stayed constant as the processor count increased.
+    
+    ![Array Creation Max Log Scale](./radixsort/final_trial/sorted_array/plot/max/array_creation_log.png)
+    
+
+##### **Master Function**
+  
+- **Max**: For large arrays, the max time for the master function decreased as more processors were added, with some fluctuations for smaller arrays.
+
+    - **Log Scale**:
+
+    ![Master Function Max Log Scale](./radixsort/final_trial/sorted_array/plot/max/master_function_log.png)
+
+    - **Regular Scale**:
+
+    ![Master Function Max](./radixsort/final_trial/sorted_array/plot/max/master_function.png)
+  
+
+##### **Sort Validation**
+
+- **Max**: Sort validation times remained flat as we added more processors.
+
+    ![Sort Validation Max Log Scale](./radixsort/final_trial/sorted_array/plot/max/sort_validation_log.png)
+
+##### **Whole Function**
+Adding processors improved the whole function’s performance, particularly with larger arrays.
+  
+- **Max**: The largest arrays had the longest execution times with fewer processors, with only small improvements beyond a certain point.
+
+    - **Log Scale**:
+
+    ![Whole Function Max Log Scale](./radixsort/final_trial/sorted_array/plot/max/whole_function_log.png)
+
+    - **Regular Scale**:
+
+    ![Whole Function Max](./radixsort/final_trial/sorted_array/plot/max/whole_function.png)
+  
+
+##### **Worker Function**
+The worker function scaled well with more processors.
+  
+- **Max**: Execution times decreased significantly with larger arrays and more processors, but smaller arrays didn’t benefit as much due to communication overhead.
+
+    - **Log Scale**:
+
+    ![Worker Function Max Log Scale](./radixsort/final_trial/sorted_array/plot/max/worker_function_log.png)
+
+    - **Regular Scale**:
+
+    ![Worker Function Max](./radixsort/final_trial/sorted_array/plot/max/worker_function.png)
