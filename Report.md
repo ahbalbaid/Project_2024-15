@@ -79,7 +79,33 @@ The array to be sorted is divided among multiple cores, and each core is assigne
 <img width="886" alt="max-whole" src="https://github.com/user-attachments/assets/fb75f9fb-977f-4301-bad0-3ae774a725ca">
 <img width="886" alt="max - merge" src="https://github.com/user-attachments/assets/96427764-c97d-43ae-b27c-ff8d6bf3bf2a">
 
+Sorted Array\
+In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
+![avg - whole](https://github.com/user-attachments/assets/006fbe41-d66c-4fcd-b767-0d56e5ce2dfe)
+![avg - create](https://github.com/user-attachments/assets/4c9cc395-1e48-4414-a4e7-4d65d8aea8d3)
+![avg - scatter](https://github.com/user-attachments/assets/c9a12aac-8d7d-4739-b1d2-e030b1f5e959)
+![avg - merging](https://github.com/user-attachments/assets/3b34e982-fd41-4d36-bddf-a57ead286ef6)
+![avg - gather](https://github.com/user-attachments/assets/2f44c1cc-b7e0-40fa-9a97-7d4a9f56fe0c)
+![avg - validation](https://github.com/user-attachments/assets/e9d86d8f-2219-4590-ac9e-78ce5d1dde87)
+![max - whole](https://github.com/user-attachments/assets/22dd5f6d-6d6c-4fe7-be3c-af820f6b8810)
+![max - merging](https://github.com/user-attachments/assets/9b3b48d0-f6a0-42ce-bba8-25aa2df6f06b)
 
+
+
+Reverse Sorted Array\
+In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
+![avg - whole](https://github.com/user-attachments/assets/20c83f27-6ee3-4244-9fe8-f5612d040432)
+![avg - create](https://github.com/user-attachments/assets/0da2e03d-2f72-4591-af4a-ca0c5ba864fd)
+![avg - scatter](https://github.com/user-attachments/assets/d7b0fd74-f222-4ec5-8a77-c592146933d9)
+![avg - merging](https://github.com/user-attachments/assets/56421664-679f-4183-b538-5d9f57d9dc48)
+![avg - gather](https://github.com/user-attachments/assets/1f5a7a47-1f38-4b14-8988-24d28c035f04)
+![avg - valid](https://github.com/user-attachments/assets/1ecce638-8599-41eb-a5a6-a70d8df4a3f9)
+![max - whole](https://github.com/user-attachments/assets/49965886-28fb-423c-b8b7-255a7f7a9df2)
+![max - merge](https://github.com/user-attachments/assets/179861c3-a46b-46a9-a8aa-d4b8ad2fc5b4)
+
+
+1% Perturbed Array
+In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
 
 Bitonic sort  
 ```
