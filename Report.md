@@ -252,3 +252,68 @@ We'll measure how the execution time changes when we increase the number of proc
 - **Weak scaling**
 
 We'll assess performance by increasing both the problem size and the number of processors proportionally. This will help us understand how well the algorithm maintains efficiency as workload and resources grow. Also, this would help us see how the algorithms handle large data.
+
+
+## 3. Project Results
+
+Please note that the results may not be fully comprehensive due to the long queue in Grace. However, we have made every effort to include as much data as possible to evaluate the performance.
+
+### Radix Sort
+We were unable to run tests with 1024 processors due to a proxy error from Grace. Additionally, because of the long queue, we were only able to perform tasks on a random input array, a reversed array, and a mostly sorted array. For the sake of clarity, we focused on the most significant plots and based our observations on them.
+
+#### **Random Input Arrays**
+
+##### **Array Creation**
+- **Max**: The maximum time for creating random input arrays remained flat as the number of processors increased.
+    
+    ![Array Creation Max Log Scale](./radixsort/final_trial/random_array/plot/max/array_creation_log.png)
+    
+
+##### **Master Function**
+  
+- **Max**: The max execution time of the master function decreased with increasing processors for larger input arrays, but for smaller arrays, there was some fluctuations.
+
+    - **Log Scale**:
+
+    ![Master Function Max Log Scale](./radixsort/final_trial/random_array/plot/max/master_function_log.png)
+
+    - **Regular Scale**:
+
+    ![Master Function Max](./radixsort/final_trial/random_array/plot/max/master_function.png)
+  
+
+##### **Sort Validation**
+
+
+- **Max**: The maximum time for validating the sorted array remained flat as the number of processors increased.
+
+    ![Sort Validation Max Log Scale](./radixsort/final_trial/random_array/plot/max/sort_validation_log.png)
+
+##### **Whole Function**
+The whole function performance showed improvement in execution time as processors increased, especially for larger arrays.
+  
+- **Max**: The maximum execution time was seen with the largest arrays and lower processor counts, with marginal improvements beyond a certain processor communication threshold.
+
+    - **Log Scale**:
+
+    ![Whole Function Max Log Scale](./radixsort/final_trial/random_array/plot/max/whole_function_log.png)
+
+    - **Regular Scale**:
+
+    ![Whole Function Max](./radixsort/final_trial/random_array/plot/max/whole_function.png)
+  
+
+##### **Worker Function**
+The worker function, which handles much of the distributed processing, demonstrated reasonable scaling with increased processor counts.
+- **Average**: The average time for worker function execution decreased significantly as the number of processors increased for larger arrays. However, smaller arrays did not benefit as much from the increased parallelism because of the communication bottleneck.
+  
+- **Max**: The maximum time for worker function execution decreased significantly as the number of processors increased for larger arrays. However, smaller arrays did not benefit as much from the increased parallelism because of the communication bottleneck.
+
+    - **Log Scale**:
+
+    ![Worker Function Max Log Scale](./radixsort/final_trial/random_array/plot/max/worker_function_log.png)
+
+    - **Regular Scale**:
+
+    ![Worker Function Max](./radixsort/final_trial/random_array/plot/max/worker_function.png)
+  

@@ -5,10 +5,10 @@ find_package(caliper REQUIRED)
 find_package(adiak REQUIRED)
 
 # TO RUN my radixsort implementation
-# add_executable(radixsort radixsort.cpp)
+add_executable(radixsort radixsort.cpp)
 
 # TO RUN radixsort-github
-add_executable(radixsort radixsort-github.cpp)
+# add_executable(radixsort radixsort-github.cpp)
 
 message(STATUS "MPI includes : ${MPI_INCLUDE_PATH}")
 message(STATUS "Caliper includes : ${caliper_INCLUDE_DIR}")

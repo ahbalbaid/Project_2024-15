@@ -302,12 +302,15 @@ int main(int argc, char *argv[])
          random_array(arr, array_size);
          break;
       case 1:
+         printf("Sorted_array.\n");
          sorted_array(arr, array_size);
          break;
       case 2:
+         printf("Reverse_array.\n");
          reverse_array(arr, array_size);
          break;
       case 3:
+         printf("Perturbed_array.\n");
          perturbed_array(arr, array_size);
          break;
       default:
