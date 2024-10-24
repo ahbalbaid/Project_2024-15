@@ -318,16 +318,28 @@ Not able to submit yet since grace is not processing any jobs at the time of rep
 ### Bitonic Sort
 Caliper files: 8/280. The rest of the jobs are pending.
 #### **Sorted Arrays**
-TBD
+![image](https://github.com/user-attachments/assets/15aaa4a7-d17d-469d-b271-f8d16caa7cfb)
+![image](https://github.com/user-attachments/assets/4e85e9ae-6cdf-4f37-9fb1-ba2233e87da9)
+![image](https://github.com/user-attachments/assets/405b8eeb-b1e9-48e4-9578-9bcfabb9f3af)
+
+
 #### **Reverse Sorted Arrays**
-TBD
+![image](https://github.com/user-attachments/assets/a7398154-6e97-41bf-83f3-fbf8228cb080)
+![image](https://github.com/user-attachments/assets/143dac73-1646-4336-9a30-abc3c5fe81dd)
+![image](https://github.com/user-attachments/assets/83b991fd-1d03-43c3-abea-0ff80d2001e1)
+
+
 #### **Random Input Arrays**
-![image](https://github.com/user-attachments/assets/d044647a-4124-4f1d-bd26-4ebee97fbed7)
-![image](https://github.com/user-attachments/assets/32d25f54-8d79-424f-9028-fdf464c5a9c2)
-![image](https://github.com/user-attachments/assets/daf131b9-7b12-4c7d-950a-49bf23b5e803)
+![image](https://github.com/user-attachments/assets/cf94d9b2-4277-4a30-a1eb-8131d0ed0215)
+![image](https://github.com/user-attachments/assets/f36979d0-c13b-482d-adc9-31fbe07d61d8)
+![image](https://github.com/user-attachments/assets/58e48015-ae7e-46e1-98f9-c80c8a41ad42)
+
 
 #### **1% Perturbed Arrays**
-TBD
+![image](https://github.com/user-attachments/assets/4963bc3f-1f70-4188-862e-d185506e5a88)
+![image](https://github.com/user-attachments/assets/b8502fca-e1ca-40f6-8655-616b599fad9f)
+![image](https://github.com/user-attachments/assets/30b64eb5-4db3-435e-90ea-5c83ab4bf0fe)
+
 
 ### Radix Sort
 We couldn't run tests with 1024 processors because Grace had a proxy error. Plus, the queue was really long, so we were only able to test with random input arrays, reversed arrays, and mostly sorted ones. To keep things simple, we focused on the most important plots and based our observations on those.
