@@ -588,15 +588,14 @@ Average ‘main’ times for reverse sorted are very similar to that of sorted a
 Avg time/rank - comp
 ![image](https://github.com/user-attachments/assets/632696ee-9bad-433d-ad82-9faefc64ce00)
 
-ex...
+Average ‘comp’ times for reverse sorted are very similar to that of sorted arrays.  **explanation is given under sorted input type ‘comp’ graph.
 
 
 
 Total time, Reverse Sorted - comm
 ![image](https://github.com/user-attachments/assets/1ca5e3a7-97fa-4258-a98f-7e4ceec1baf2)
 
-ex...
-
+Total ‘comm’ times for reverse sorted input type is very similar to that of the sorted input type ‘comm’.  **explanation is given under sorted input type ‘comm’ graph.
 
 
 
@@ -613,7 +612,7 @@ Average ‘main’ times for 1% perturbed are very similar to that of random arr
 Avg time/rank - comp
 ![image](https://github.com/user-attachments/assets/28bf289b-cd87-4759-9107-4171f5c00b4f)
 
-ex...
+Average ‘comp’ times for 1% perturbed are very similar to that of random arrays.  **explanation is given under random input type ‘comp’ graph.
 
 
 
