@@ -537,10 +537,12 @@ Avg time/rank - main
 We can see that the average time for the sample sort implementation for sorted arrays seems to go down for larger array sizes and go up for smaller array sizes. Time spent on tasks such as communication seems to be increasing the average time for smaller arrays and decreasing the average ‘main’ time for larger arrays. There is also not a great distribution of data with regards to smaller arrays as there is with larger arrays. Sorted arrays also seem to have less balanced input which could also slow down ‘main’ times.
 
 
+
 Avg time/rank - comp
 ![image](https://github.com/user-attachments/assets/922adfbb-285f-4826-b363-e0dce72df712)
 
 The average computation times for ‘main’ seem to be going down for each array size except for smaller arrays that increase processors. This is likely due to overhead that is associated with increasing processors while the array is small, which negatively impacts this algorithm. Data is not distributed as efficiently as it could be. There is more time being spent communicating rather than actually sorting. 
+
 
 
 Total time, Sorted - comm
@@ -558,16 +560,19 @@ Avg. time/rank - main
 The average ‘main’ times for random arrays tend to go down except for smaller arrays. As said previously smaller arrays have seemed to be spending more time communicating as processors increase rather than sorting. Showing that communication is more dominant over computation. 
 
 
+
 Avg. time/rank - comp
 ![image](https://github.com/user-attachments/assets/e4ce1009-47c6-4ff1-90ba-745ec9533c71)
 
 Average computation times are very similar to that of the sorted arrays. **explanation is given under sorted array graph
 
 
+
 Total Time, Random - comm
 ![image](https://github.com/user-attachments/assets/bb0a6cd6-3a08-49ba-a684-5767eb488089)
 
 Total communication times are very similar to that of sorted arrays.  **explanation is given under sorted array graph
+
 
 
 **Reverse sorted**
@@ -579,16 +584,21 @@ Avg time/rank - main
 Average ‘main’ times for reverse sorted are very similar to that of sorted arrays.  **explanation is given under sorted array graph
 
 
+
 Avg time/rank - comp
 ![image](https://github.com/user-attachments/assets/632696ee-9bad-433d-ad82-9faefc64ce00)
 
 ex...
 
 
+
 Total time, Reverse Sorted - comm
 ![image](https://github.com/user-attachments/assets/1ca5e3a7-97fa-4258-a98f-7e4ceec1baf2)
 
 ex...
+
+
+
 
 **1% Perturbed**
 
@@ -599,13 +609,18 @@ Avg. time/rank - main
 Average ‘main’ times for 1% perturbed are very similar to that of random arrays.  **explanation is given under random input graph
 
 
+
 Avg time/rank - comp
 ![image](https://github.com/user-attachments/assets/28bf289b-cd87-4759-9107-4171f5c00b4f)
 
 ex...
 
+
+
 Total time, 1% Perturbed - comm
 ![image](https://github.com/user-attachments/assets/311f82d9-621f-4aff-a5f6-33181a88d276)
+
+
 
 Total communication times are very similar to that of sorted arrays.  **explanation is given under sorted array graph
 
@@ -618,11 +633,13 @@ Avg. time/rank, random - comm
 These are the total times for average communication times for random input size. Communication seems to be going down for larger arrays and up for smaller arrays. It seems that since there are more processors for larger arrays there is a smaller portion of data that is being sorted which creates fast communication times since sorting is done fairly quickly. We see almost the opposite happen for smaller arrays. More communication is happening because there is more data.
 
 
+
 Avg rank/time, 1% perturbed - comm
 ![image](https://github.com/user-attachments/assets/88c7d495-838d-4d1e-8b27-07c9c6773802)
 
 
 Similar trend to that of the random input arrays. **explanation is above under the random input graph.
+
 
 
 Avg rank/time, sorted - comm
@@ -631,13 +648,17 @@ Avg rank/time, sorted - comm
 In the sorted input type graph we see that instead of going down as we saw in the random input type it stays fairly constant. This could be due to the input type being less balanced in terms of the array itself for each processor. Leading to inefficient sorting for each processor.
 
 
+
 Avg rank/time, reverse sorted - comm
 ![image](https://github.com/user-attachments/assets/b7a077e9-93f8-4653-8d5f-8f3001133ea0)
 
 Similar trend to that of the sorted input array. **explanation is above under the sorted input graph.
 
 
+
 **Presentation:**
+
+
 Main - Speedup, Random
 ![image](https://github.com/user-attachments/assets/4d1c5532-108b-4d20-bec6-fe46398ecdc8)
 
@@ -645,10 +666,12 @@ Main - Speedup, Random
 As you can see there is an overhead for smaller arrays as you increase processors. Time spent on communication and managing parallel tasks take a large portion of time which limits speedup. As for larger arrays, we see a benefit in dividing the workload as you increase the number of processors. 
 
 
+
 Main - Avg Time per Rank (Array size: 2^ 28)
 ![image](https://github.com/user-attachments/assets/16aa4134-c8c3-4c20-a6ce-99e41d9c02d5)
 
 Average time for ‘main’ decreases on varying input types. Random and perturbed are the ones on the faster end. This is probably due to the input types being more balanced for each processor for random and perturbed. Leading to inefficient sorting for each processor. Another possibility is how the inputs are sorted. This could also lead to some overhead. 
+
 
 
 Total Time, Random - comm
