@@ -521,38 +521,116 @@ TBD
 
 ### Sample Sort
 
-
-#### **Random Arrays**
-
-As you increase the number of processes, the computation time goes down because the workload is spread across more processors, meaning each one handles less data, so the processing gets faster. For communication time, it initially decreases since each process has fewer data to send and receive. But with MPI calls like MPI_Alltoall, communication time can actually start increasing. This happens because as you add more processes, each one needs to communicate with more others. So even though they’re dealing with smaller chunks of data, there are more processes exchanging messages, which adds overhead and leads to higher communication time in those specific MPI calls.
+This is a detailed analysis of computation performance and communication performance along with figures and explanations of the analysis.
 
 
-Avg. time graphs
-![image](https://github.com/user-attachments/assets/e9414b73-f23a-47df-a49b-374488396e02)
-![image](https://github.com/user-attachments/assets/fdeda8bd-6076-4e3e-a431-99e7395df84e)
-![image](https://github.com/user-attachments/assets/f177c026-c58b-4c4d-b08e-baf253a1ce40)
-![image](https://github.com/user-attachments/assets/7188f8d0-66a9-48f7-a4de-5c8a35f7e01b)
-
-Max graphs
-![image](https://github.com/user-attachments/assets/f0a8c1cb-6a97-4daf-ab06-255aa7b0665e)
-![image](https://github.com/user-attachments/assets/62ac73f5-46d6-41cd-b102-1e3f41a6be9a)
-
-Min Graphs
-![image](https://github.com/user-attachments/assets/1e064449-11a9-43a6-99f1-5bd29884b230)
-![image](https://github.com/user-attachments/assets/e3299819-e997-4cee-a287-2389cd9d5911)
+Note*** When looking at min time and max times of the graphs for average time/rank we can see that the minimum time would provide us with the baseline for the fastest possible communication time and the maximum time would provide us with the highest time, which could highlight any bottlenecks. 
 
 
 
+**Sorted**
 
 
-#### **Sorted Arrays**
-TBD - jobs currently running
+Avg time/rank - main
+
+We can see that the average time for the sample sort implementation for sorted arrays seems to go down for larger array sizes and go up for smaller array sizes. Time spent on tasks such as communication seems to be increasing the average time for smaller arrays and decreasing the average ‘main’ time for larger arrays. There is also not a great distribution of data with regards to smaller arrays as there is with larger arrays. Sorted arrays also seem to have less balanced input which could also slow down ‘main’ times.
 
 
-#### **Reverse Sorted Arrays**
-TBD - jobs currently running
+Avg time/rank - comp
+
+The average computation times for ‘main’ seem to be going down for each array size except for smaller arrays that increase processors. This is likely due to overhead that is associated with increasing processors while the array is small, which negatively impacts this algorithm. Data is not distributed as efficiently as it could be. There is more time being spent communicating rather than actually sorting. 
+
+
+Total time, Sorted - comm
+
+As processors increase the communication time also increases. The more processors you have means that you generally have more communication going on between the processors.
+
+
+**Random** 
+
+
+Avg. time/rank - main
+![image](https://github.com/user-attachments/assets/759f4f3e-feaa-4b48-832b-eaf6e0cb4bad)
+The average ‘main’ times for random arrays tend to go down except for smaller arrays. As said previously smaller arrays have seemed to be spending more time communicating as processors increase rather than sorting. Showing that communication is more dominant over computation. 
 
 
 
-#### **1% Perturbed Arrays**
-TBD - jobs currently running
+
+Avg. time/rank - comp
+![image](https://github.com/user-attachments/assets/e4ce1009-47c6-4ff1-90ba-745ec9533c71)
+Average computation times are very similar to that of the sorted arrays. **explanation is given under sorted array graph
+
+
+Total Time, Random - comm
+![image](https://github.com/user-attachments/assets/bb0a6cd6-3a08-49ba-a684-5767eb488089)
+Total communication times are very similar to that of sorted arrays.  **explanation is given under sorted array graph
+
+
+**Reverse sorted**
+
+
+Avg time/rank - main
+
+Average ‘main’ times for reverse sorted are very similar to that of sorted arrays.  **explanation is given under sorted array graph
+
+
+Avg time/rank - comp
+
+
+Total time, Reverse Sorted - comm
+
+
+
+**1% Perturbed**
+
+
+Avg. time/rank - main
+
+Average ‘main’ times for 1% perturbed are very similar to that of random arrays.  **explanation is given under random input graph
+
+
+Avg time/rank - comp
+
+
+Total time, 1% Perturbed - comm
+
+Total communication times are very similar to that of sorted arrays.  **explanation is given under sorted array graph
+
+
+
+**Something to note:**
+Avg. time/rank, random - comm
+
+These are the total times for average communication times for random input size. Communication seems to be going down for larger arrays and up for smaller arrays. It seems that since there are more processors for larger arrays there is a smaller portion of data that is being sorted which creates fast communication times since sorting is done fairly quickly. We see almost the opposite happen for smaller arrays. More communication is happening because there is more data.
+
+
+Avg rank/time, 1% perturbed - comm
+
+Similar trend to that of the random input arrays. **explanation is above under the random input graph.
+
+
+Avg rank/time, sorted - comm
+
+In the sorted input type graph we see that instead of going down as we saw in the random input type it stays fairly constant. This could be due to the input type being less balanced in terms of the array itself for each processor. Leading to inefficient sorting for each processor.
+
+
+Avg rank/time, reverse sorted - comm
+
+Similar trend to that of the sorted input array. **explanation is above under the sorted input graph.
+
+
+**Presentation:**
+Main - Speedup, Random
+
+
+As you can see there is an overhead for smaller arrays as you increase processors. Time spent on communication and managing parallel tasks take a large portion of time which limits speedup. As for larger arrays, we see a benefit in dividing the workload as you increase the number of processors. 
+
+
+Main - Avg Time per Rank (Array size: 2^ 28)
+
+Average time for ‘main’ decreases on varying input types. Random and perturbed are the ones on the faster end. This is probably due to the input types being more balanced for each processor for random and perturbed. Leading to inefficient sorting for each processor. Another possibility is how the inputs are sorted. This could also lead to some overhead. 
+
+
+Total Time, Random - comm
+
+As the number of processors increases, the longer it takes for communication between each process. Since there are more processors there is more communication that is taking place. As processes increase at the end it starts to level off. The leveling off could potentially be due to MPI’s implementation with high processor counts. Meaning that MPI is able to handle these processors when there are too many. 
