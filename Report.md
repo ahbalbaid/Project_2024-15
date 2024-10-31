@@ -372,34 +372,64 @@ Perturbed weak scaling graph follows the same logic as the random weak scaling. 
 
 ### Bitonic Sort
 
-#### **Sorted Arrays**
+#### **Weak scaling**
 Bitonic is an unstable algorithm which means it reorders the elements in the array even if they are already sorted. The sorting time decreases for each input size and the largest array had the greatest speedup. Computation dominates the overall runtime which includes local sequential sort and merging. As parallelization increases, each thread operates on a smaller portion of data.  
-  
-![image](https://github.com/user-attachments/assets/15aaa4a7-d17d-469d-b271-f8d16caa7cfb)
-![image](https://github.com/user-attachments/assets/4e85e9ae-6cdf-4f37-9fb1-ba2233e87da9)
-![image](https://github.com/user-attachments/assets/405b8eeb-b1e9-48e4-9578-9bcfabb9f3af)
 
-#### **Reverse Sorted Arrays**
-The reverse sorted arrays have similar runtimes to the sorted arrays.  
-  
-![image](https://github.com/user-attachments/assets/a7398154-6e97-41bf-83f3-fbf8228cb080)
-![image](https://github.com/user-attachments/assets/143dac73-1646-4336-9a30-abc3c5fe81dd)
-![image](https://github.com/user-attachments/assets/83b991fd-1d03-43c3-abea-0ff80d2001e1)
+**Main**:  
+![image](https://github.com/user-attachments/assets/f08e75e4-08c3-4059-8660-cf43638324b2)
+![image](https://github.com/user-attachments/assets/cf54d28a-fa91-4d8b-88bd-3c05e7aed336)
+![image](https://github.com/user-attachments/assets/e4189bad-193b-4f8f-ba9f-6a7812502913)
+![image](https://github.com/user-attachments/assets/cda57cf4-3bdb-42ed-b20c-f43a8ef0ada7)
+**Comp_Large**:  
+![image](https://github.com/user-attachments/assets/abfe73e6-ec89-46ff-aeca-220de7c53727)
+![image](https://github.com/user-attachments/assets/e6b3928e-9796-449a-a66e-c6db9db7ed2e)
+![image](https://github.com/user-attachments/assets/866f460b-5e7c-4a8e-b579-9b7a89b00384)
+![image](https://github.com/user-attachments/assets/e8d006ff-886e-413e-a6f9-d6eee023edff)
+**Comm**:  
+![image](https://github.com/user-attachments/assets/552553d3-b12a-43db-ba68-3e344de25172)
+![image](https://github.com/user-attachments/assets/31e45a85-f10a-4ec5-b7a6-f6b0dc4fe07f)
+![image](https://github.com/user-attachments/assets/ba1145b1-6672-459f-a76f-55abad22aec1)
+![image](https://github.com/user-attachments/assets/0c14fac8-6ee3-4cd1-affa-e30ddf7ef99b)
+
+#### **Strong scaling speedup**
+**Main**:  
+![image](https://github.com/user-attachments/assets/010bc4cf-cbc3-4923-8de9-692c7fee63ad)
+![image](https://github.com/user-attachments/assets/b8851929-1c85-42d7-9970-a102b857e2f7)
+![image](https://github.com/user-attachments/assets/0179148d-b915-4067-9c62-95b20eebe8ef)
+![image](https://github.com/user-attachments/assets/64d37430-d13c-4b2f-bd6b-54e88cd7b205)  
+**Comp_Large**:  
+![image](https://github.com/user-attachments/assets/354ff9ce-433e-4801-b879-639dfd32150c)
+![image](https://github.com/user-attachments/assets/66b020a6-a761-40a4-b19e-5f04338919c4)
+![image](https://github.com/user-attachments/assets/43fc5946-a86b-48f9-ad62-7d534d550c8e)
+![image](https://github.com/user-attachments/assets/dc118d53-73fe-426c-ba53-3666b7d984d9)  
+**Comm**:  
+![image](https://github.com/user-attachments/assets/a8b44195-ae2f-4b4c-8aa6-78b5b6d1a38f)
+![image](https://github.com/user-attachments/assets/8ee16786-2b8c-42d9-8ec2-f769de15fe74)
+![image](https://github.com/user-attachments/assets/08cfc750-4ba2-4353-beca-6190ab3f4998)
+![image](https://github.com/user-attachments/assets/074f9445-1bb3-434c-b4d1-923a905d9569)
+
+#### **All Input Types, Strong scaling**
+**Input size 2^24**:  
+![image](https://github.com/user-attachments/assets/db0b45d2-af5b-487d-8e9d-e1ae04ab59b9)
+![image](https://github.com/user-attachments/assets/6e2264cb-e154-44e9-b742-a66f69e4c88c)
+![image](https://github.com/user-attachments/assets/4016b791-43f9-4163-bbd1-73e9722eeb34)  
+**Input size 2^26**:  
+![image](https://github.com/user-attachments/assets/f388da14-fcdd-463f-80e1-ffe4b73c53cb)
+![image](https://github.com/user-attachments/assets/ce8e183f-6f23-4444-aefa-6950a0074418)
+![image](https://github.com/user-attachments/assets/b2561413-5353-4ecb-9266-690b526d2c73)  
+**Input size 2^28**:  
+![image](https://github.com/user-attachments/assets/0c326091-5701-46e9-9a4b-041a05f76130)
+![image](https://github.com/user-attachments/assets/2b6cd612-eec6-4f3d-8495-5dc6e66994c5)
+![image](https://github.com/user-attachments/assets/052e76c9-ecc7-4e6c-acc1-a3e38bad384e)
 
 #### **Random Input Arrays**
 The random input arrays took the most amount of time compared to the different inputs. More time is needed on local sequential sort since not enough threads are available to utilize the parallel nature of bitonic sort. As the number of threads increase, each input size converges to a low runtime. Communication remains relatively constant and accounts for a small portion of the overall runtime.   
   
-![image](https://github.com/user-attachments/assets/cf94d9b2-4277-4a30-a1eb-8131d0ed0215)
-![image](https://github.com/user-attachments/assets/f36979d0-c13b-482d-adc9-31fbe07d61d8)
-![image](https://github.com/user-attachments/assets/58e48015-ae7e-46e1-98f9-c80c8a41ad42)
 
 
 #### **1% Perturbed Arrays**
 The 1% perturbed arrays show similar trends compared to the other inputs. As the parallelization increases each input type and array size converges to similar runtimes. Increasing the number of threads past a 2^9 will not improve runtime significantly since parallelization overhead will become dominant.  
-  
-![image](https://github.com/user-attachments/assets/4963bc3f-1f70-4188-862e-d185506e5a88)
-![image](https://github.com/user-attachments/assets/b8502fca-e1ca-40f6-8655-616b599fad9f)
-![image](https://github.com/user-attachments/assets/30b64eb5-4db3-435e-90ea-5c83ab4bf0fe)
+
 
 
 ### Radix Sort
