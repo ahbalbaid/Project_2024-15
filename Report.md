@@ -184,64 +184,73 @@ ParallelRadixSort(arr, id, num_processes, num_bits_per_pass):
 
 Sample Sort
 ```
-function Sample_Sort(arr[1..n], num_buckets, p):
-        1. Initialize MPI
-        - MPI.Init()
-        - Get rank of the current process and num_processes
-        - Get the segment size -> segment_size = n / num_processes
+// SampleSort Pseudocode using MPI and std::sort
 
+Function SampleSort(n, elmnts, comm):
+    Initialize npes, myrank, nlocal as number of processes, rank, and size of local data
+    Initialize splitters, allpicks, scounts, sdispls, rcounts, rdispls as empty arrays
 
-        2. Scatter the array A across all processes
-        - local_segment = MPI_Scatter(A, segment_size, root=0)
-        - Processes now have a portion of arr('local_segment')
+    // Get communicator information
+    Call MPI_Comm_size(comm, npes)
+    Call MPI_Comm_rank(comm, myrank)
+    Set nlocal as size of elmnts array
 
+    Resize splitters to size npes
+    Resize allpicks to size npes * (npes - 1)
 
-        3. Sort the local segment using a appropriate sorting algorithm 
-        - Sort local_segment
+    // Sort local array
+    Call std::sort(elmnts.begin(), elmnts.end())
 
+    // Select npes-1 equally spaced local splitters
+    For i from 1 to npes:
+        Set splitters[i - 1] = elmnts[i * nlocal / npes]
 
-        4. Select S samples from local segments
-        - samples_local = []
-        - Randomly select '(p−1) * num_buckets' elements from local_segment as samples
-        - samples_all = MPI_Gather(samples_local, root=0) - gathers all samples at root processes
+    // Gather splitters from all processes
+    Call MPI_Allgather(splitters.data(), npes - 1, MPI_INT, allpicks.data(), npes - 1, MPI_INT, comm)
 
+    // Sort the gathered splitters
+    Call std::sort(allpicks.begin(), allpicks.end())
 
-        5. Root process sorts samples and selects splitters
-        - if rank == 0:
-            - Sort 'samples_all' using a appropriate sorting algorithm 
-            - Determine splitters: [s0, s1, ..., sp] <- [-∞, Sk, S2k, ..., S(p−1)k, ∞]
-        - splitters = MPI_Bcast(splitters, root=0) - Broadcasting splitters to all processes
+    // Select global splitters from sorted allpicks
+    For i from 1 to npes:
+        Set splitters[i - 1] = allpicks[i * npes]
+    Set splitters[npes - 1] to INT_MAX
 
+    // Count elements for each bucket (scounts)
+    Initialize scounts as array of size npes with 0
+    Set j = 0
+    For i from 0 to nlocal:
+        If elmnts[i] < splitters[j]:
+            Increment scounts[j]
+        Else:
+            Increment scounts[++j]
 
-        6. Partition elements into buckets based on splitters
-        - Initialize local_buckets = [] * num_buckets
-        - for each a in local_segment:
-            - Find j such that splitters[j-1] < a <= splitters[j]
-            - Place a in local_buckets[j]
+    // Calculate starting index for each bucket in local data (sdispls)
+    Initialize sdispls as array of size npes with 0
+    For i from 1 to npes:
+        Set sdispls[i] = sdispls[i - 1] + scounts[i - 1]
 
+    // Perform all-to-all to get receive counts (rcounts)
+    Initialize rcounts as array of size npes
+    Call MPI_Alltoall(scounts.data(), 1, MPI_INT, rcounts.data(), 1, MPI_INT, comm)
 
-        7. Redistribute buckets among processes
-        - Prepare 'send_counts' and 'send_displacements' for 'local_buckets'
-        - Use MPI_Alltoallv to exchange elements such that each process receives a global bucket
-        - Each process now holds one bucket (global_bucket) which contains all elements within a specific range
+    // Calculate starting index for received elements (rdispls)
+    Initialize rdispls as array of size npes with 0
+    For i from 1 to npes:
+        Set rdispls[i] = rdispls[i - 1] + rcounts[i - 1]
 
+    // Calculate total elements to receive (nsorted) and resize sorted_elmnts array
+    Set nsorted = rdispls[npes - 1] + rcounts[npes - 1]
+    Initialize sorted_elmnts as array of size nsorted
 
-        8. Sort each bucket locally
-        - Sort global_bucket using a appropriate sorting algorithm 
+    // Send and receive elements using MPI_Alltoallv
+    Call MPI_Alltoallv(elmnts.data(), scounts.data(), sdispls.data(), MPI_INT,
+                       sorted_elmnts.data(), rcounts.data(), rdispls.data(), MPI_INT, comm)
 
+    // Perform final local sort on received data
+    Call std::sort(sorted_elmnts.begin(), sorted_elmnts.end())
 
-        9. Gather sorted buckets at the root process
-        - sorted_buckets_all = MPI_Gather(global_bucket, root=0)
-
-
-        10. Root process concatenates sorted buckets to form the final sorted array
-        - if rank == 0:
-            - final_sorted_array = concatenate(sorted_buckets_all)
-            - return final_sorted_array
-
-
-        11. Finalize MPI environment
-        - MPI_Finalize()
+    Return sorted_elmnts
 ```
 <img width="1010" alt="image" src="https://github.com/user-attachments/assets/ba218105-50df-4529-8d67-bb16f3087b5b">
 
