@@ -276,53 +276,99 @@ Please note that the results may not be fully comprehensive due to the long queu
 
 ### Merge Sort
 
-Merging refers to comp and Gather / Scatter refer to comm, these can be renamed in future submissions once Grace is up.\
-#### **Random Arrays**
-<img width="1018" alt="Screenshot 2024-10-16 at 9 58 50 PM" src="https://github.com/user-attachments/assets/d074d70f-f20e-4c63-90ee-c22beb124979">
+#### **Strong scaling for each array size**
+<img width="888" alt="Screenshot 2024-10-30 at 9 05 30 PM" src="https://github.com/user-attachments/assets/93393d1b-8abb-4ef9-9936-ebb461397692">
+<img width="888" alt="Screenshot 2024-10-30 at 9 05 27 PM" src="https://github.com/user-attachments/assets/fd837a35-1b9a-4966-9044-44b28d42c3b0">
+<img width="888" alt="Screenshot 2024-10-30 at 9 05 24 PM" src="https://github.com/user-attachments/assets/ec37af3b-81dc-45f9-a907-ff03b48f8df5">
 
-<img width="886" alt="avg - whole" src="https://github.com/user-attachments/assets/5940e54b-ea36-4af5-956d-c4d5c79c328b">
-<img width="886" alt="avg - create" src="https://github.com/user-attachments/assets/4cff629b-1e10-4d14-a490-c549d8afd9d7">
-<img width="886" alt="avg - scatter" src="https://github.com/user-attachments/assets/0f636bf7-9b3a-4f14-9bd8-51c9e766adfe">
-<img width="886" alt="avg -merging" src="https://github.com/user-attachments/assets/3cb150ab-16ec-4b9f-896b-5aaf1db01eb7">
-<img width="886" alt="avg - gather" src="https://github.com/user-attachments/assets/2060854e-5e82-410a-bc7e-d6f4d047a0a1">
-<img width="886" alt="avg - validate" src="https://github.com/user-attachments/assets/924f5a8c-d060-4a9b-bd4b-cec78c29c100">
+<img width="888" alt="Screenshot 2024-10-30 at 9 06 22 PM" src="https://github.com/user-attachments/assets/acc6ce0b-6596-477b-9068-fe0ec5c51db0">
+<img width="888" alt="Screenshot 2024-10-30 at 9 06 19 PM" src="https://github.com/user-attachments/assets/68157123-c9a9-4298-871a-b97d4e630236">
+<img width="888" alt="Screenshot 2024-10-30 at 9 06 17 PM" src="https://github.com/user-attachments/assets/13620b1b-0ad0-4511-9f3a-eea576341e0c">
 
-<img width="886" alt="max-whole" src="https://github.com/user-attachments/assets/fb75f9fb-977f-4301-bad0-3ae774a725ca">
-<img width="886" alt="max - merge" src="https://github.com/user-attachments/assets/96427764-c97d-43ae-b27c-ff8d6bf3bf2a">
+<img width="888" alt="Screenshot 2024-10-30 at 9 06 40 PM" src="https://github.com/user-attachments/assets/4699c24d-241a-46a3-b2bd-403921d17cba">
+<img width="888" alt="Screenshot 2024-10-30 at 9 06 38 PM" src="https://github.com/user-attachments/assets/a562ddeb-823e-4194-83d2-897c23dfd52b">
+<img width="888" alt="Screenshot 2024-10-30 at 9 06 36 PM" src="https://github.com/user-attachments/assets/eae5179e-2755-42cd-b77e-7fad568c0fa1">
 
-Here we can see that the average time for each thread for whole function goes down. This can be explained since each worker thread has less computation to do, which goes hand in hand with the merging graph, which also goes down as the number of processors goes up. The array creation time should be the same since there is only one process doing the creation. MPI Scatter seems to follow a downwards - trend, this could be explained by the time required to send smaller chunks of data is generally lower than sending larger chunks, which can reduce the overall communication time. The whole function max time, which is held by the master process staying nearly the same is due to the master process having to perform a final merge sort call with the chunk sorted array at the end. However, the max time of merging is downwards because workers have a smaller chunk to compute as the processor count goes up and is divided amongst more processors. 
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 02 PM" src="https://github.com/user-attachments/assets/aff208fc-9fe5-4151-b8a9-d71b48033d9a">
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 00 PM" src="https://github.com/user-attachments/assets/a37e45ad-a01d-451a-92cc-fecf91d1aa93">
+<img width="888" alt="Screenshot 2024-10-30 at 9 06 58 PM" src="https://github.com/user-attachments/assets/209a0df1-d547-4b44-a3ed-6514cf2c2d9b">
 
-#### **Sorted Arrays**
-In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
-![avg - whole](https://github.com/user-attachments/assets/006fbe41-d66c-4fcd-b767-0d56e5ce2dfe)
-![avg - create](https://github.com/user-attachments/assets/4c9cc395-1e48-4414-a4e7-4d65d8aea8d3)
-![avg - scatter](https://github.com/user-attachments/assets/c9a12aac-8d7d-4739-b1d2-e030b1f5e959)
-![avg - merging](https://github.com/user-attachments/assets/3b34e982-fd41-4d36-bddf-a57ead286ef6)
-![avg - gather](https://github.com/user-attachments/assets/2f44c1cc-b7e0-40fa-9a97-7d4a9f56fe0c)
-![avg - validation](https://github.com/user-attachments/assets/e9d86d8f-2219-4590-ac9e-78ce5d1dde87)
-![max - whole](https://github.com/user-attachments/assets/22dd5f6d-6d6c-4fe7-be3c-af820f6b8810)
-![max - merging](https://github.com/user-attachments/assets/9b3b48d0-f6a0-42ce-bba8-25aa2df6f06b)
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 17 PM" src="https://github.com/user-attachments/assets/3e476d36-28d1-426d-96e1-249b26e8135a">
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 16 PM" src="https://github.com/user-attachments/assets/27a9458f-5182-4116-aaba-a8e3853e6ffc">
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 13 PM" src="https://github.com/user-attachments/assets/b672fad3-ffa6-4a1e-9638-46142ad4a298">
 
-The sorted array follows the same trends as the random array. 
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 39 PM" src="https://github.com/user-attachments/assets/9fd7106f-ad1e-4960-b7cf-c9a43922f32c">
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 37 PM" src="https://github.com/user-attachments/assets/3ed5290d-f5bf-49e2-a2d8-d79d765bb9c2">
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 35 PM" src="https://github.com/user-attachments/assets/023f203c-c416-4a43-a5bd-20791b4373b1">
 
-#### **Reverse Sorted Arrays**
-In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
-![avg - whole](https://github.com/user-attachments/assets/20c83f27-6ee3-4244-9fe8-f5612d040432)
-![avg - create](https://github.com/user-attachments/assets/0da2e03d-2f72-4591-af4a-ca0c5ba864fd)
-![avg - scatter](https://github.com/user-attachments/assets/d7b0fd74-f222-4ec5-8a77-c592146933d9)
-![avg - merging](https://github.com/user-attachments/assets/56421664-679f-4183-b538-5d9f57d9dc48)
-![avg - gather](https://github.com/user-attachments/assets/1f5a7a47-1f38-4b14-8988-24d28c035f04)
-![avg - valid](https://github.com/user-attachments/assets/1ecce638-8599-41eb-a5a6-a70d8df4a3f9)
-![max - whole](https://github.com/user-attachments/assets/49965886-28fb-423c-b8b7-255a7f7a9df2)
-![max - merge](https://github.com/user-attachments/assets/179861c3-a46b-46a9-a8aa-d4b8ad2fc5b4)
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 58 PM" src="https://github.com/user-attachments/assets/ca9fb013-8f60-4209-8072-76837888852d">
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 56 PM" src="https://github.com/user-attachments/assets/a2e77f5b-11bf-4cac-823c-8d2beb813de5">
+<img width="888" alt="Screenshot 2024-10-30 at 9 07 54 PM" src="https://github.com/user-attachments/assets/a3cbfa02-0f70-4869-b771-73dc5579042c">
 
-The reverse sorted array follows the same trends as the random array. 
+In merge sort strong scaling graphs, we can see that larger amount of processors, which means distributing the work across more processors generally decreases the average computation time per processor as each processor handles a smaller portion of the total array. This leads to a reduction in the time required for each processor to sort its assigned sub-array, so the average time per rank initially decreases as you add processors.
+
+However, as the array size becomes smaller, the benefit of adding more processors diminishes due to communication overhead. For large arrays, computation time (actual sorting work) dominates, making the communication overhead relatively minor. But with smaller array sizes, the computation per processor becomes minimal, so the time spent in communication and synchronization between processors such as calls to MPI_GATHER and MPI_SCATTER becomes a larger portion of the total runtime. At this point, communication overhead outweighs the gains from parallelism, limiting the effectiveness of adding more processors and causing the average time per rank to stay constant or even increase, as we can see from the graphs with lower array sizes.
 
 
 
-#### **1% Perturbed Arrays**
-In order: Avg - Whole Function, Array Creation, MPI Scatter, Merging, MPI Gather, Sort Validation, Max - Whole Function, Merging
-Not able to submit yet since grace is not processing any jobs at the time of report submission. 
+#### **Strong scaling speedup - Random**
+<img width="888" alt="speedup - random" src="https://github.com/user-attachments/assets/617c9f46-08aa-4983-8a07-b3fa2de71fc2">
+<img width="888" alt="comm - speed" src="https://github.com/user-attachments/assets/3fa57a95-7b80-43d1-aa83-ff7f1b0d5ebf">
+<img width="888" alt="comp - speed" src="https://github.com/user-attachments/assets/5fdac1a0-06ff-4b3e-b254-9f273a2aaed0">
+
+
+In strong scaling graphs, we can see that the speedup increases significantly for larger array sizes because larger workloads have more computational work to distribute across processors. When the problem is small, the overhead from communication between the processors outweighs the benefits of adding more processors, leading to diminishing returns in speedup. However, with larger problem sizes, the actual computation dominates over this overhead, so each processor can perform a substantial amount of work without the overheads taking over a larger percentage of the total time. 
+
+#### **Strong scaling speedup - Sorted**
+<img width="888" alt="speedup - sorted" src="https://github.com/user-attachments/assets/7aea1169-1f9a-4ff9-b833-4b51d3c47c16">
+<img width="888" alt="comm -sorted - speed" src="https://github.com/user-attachments/assets/7aeb7c42-206d-4b35-90ba-cc5c3921240b">
+<img width="888" alt="comp - sorted - speed" src="https://github.com/user-attachments/assets/a6192305-0995-4cdb-9658-2bdacf030201">
+
+Sorted strong scaling speedup graph follows the same logic as the random speedup. See above. 
+
+#### **Strong scaling speedup - Reverse Sorted**
+<img width="888" alt="speedup - reverse" src="https://github.com/user-attachments/assets/0a025faa-5097-4f9a-8bcb-2a0ee6b1c37a">
+<img width="888" alt="comp - rev - speed" src="https://github.com/user-attachments/assets/ec7490d7-f23b-47be-92d0-4ce395f6a6f1">
+<img width="888" alt="comm - rev - speed" src="https://github.com/user-attachments/assets/4e3bfaac-ab84-4fe0-a662-8dfe26c70de0">
+
+Reverse sorted strong scaling speedup graph follows the same logic as the random speedup. See above. 
+
+#### **Strong scaling speedup - 1% Perturbed**
+<img width="888" alt="speedup - perturbed" src="https://github.com/user-attachments/assets/156ed98a-cdc5-40e9-856d-9a6372ec1f4b">
+<img width="888" alt="comp - perturbed - speed" src="https://github.com/user-attachments/assets/57e6cef4-4282-4cae-95c0-e6655bcb527a">
+<img width="888" alt="comm - pert - speed" src="https://github.com/user-attachments/assets/18018f2b-17ad-498d-9b65-e7162dd188d5">
+
+Perturbed strong scaling speedup graph follows the same logic as the random speedup. See above. 
+
+#### **Weak Scaling - Random**
+<img width="888" alt="Screenshot 2024-10-30 at 8 58 19 PM" src="https://github.com/user-attachments/assets/e284d883-c7a7-434c-91d0-bdf126f7d685">
+<img width="888" alt="Screenshot 2024-10-30 at 8 58 16 PM" src="https://github.com/user-attachments/assets/410ca918-56e4-4527-ae78-af92a3291eda">
+<img width="888" alt="Screenshot 2024-10-30 at 8 58 13 PM" src="https://github.com/user-attachments/assets/3d1a2e42-4c3c-4d7b-878e-ab7a2b340192">
+
+In the weak scaling graph for Random sort method, the main function time is roughly constant as both the array size and the number of processors increase proportionally. This constant is achieved because each processor is handling about the same amount of work as in the original setup. Apart from smaller array sizes where overhead overshadows the distribution of work in the total time, the constant main function time is expected apart from a few outliers.  
+
+#### **Weak Scaling - Sorted**
+<img width="888" alt="Screenshot 2024-10-30 at 8 58 49 PM" src="https://github.com/user-attachments/assets/97747d67-6b6e-4ba5-9859-0766426852f4">
+<img width="888" alt="Screenshot 2024-10-30 at 8 58 46 PM" src="https://github.com/user-attachments/assets/c009edc1-77b4-4774-8a75-595407ada2c9">
+<img width="888" alt="Screenshot 2024-10-30 at 8 58 43 PM" src="https://github.com/user-attachments/assets/08f22ef2-f6fe-4f98-9675-40ce6d777eed">
+
+Sorted weak scaling graph follows the same logic as the random weak scaling. See above. 
+
+
+#### **Weak Scaling - Reverse Sorted**
+<img width="888" alt="Screenshot 2024-10-30 at 8 56 06 PM" src="https://github.com/user-attachments/assets/bceea094-b5a3-401f-a0a8-adb9c0249570">
+<img width="888" alt="Screenshot 2024-10-30 at 8 56 03 PM" src="https://github.com/user-attachments/assets/cc0d6750-5787-421d-88c3-0e1520a5e074">
+<img width="888" alt="Screenshot 2024-10-30 at 8 55 57 PM" src="https://github.com/user-attachments/assets/8eb975d5-6a8d-414c-a8ff-e36a211ade2f">
+
+Reverse sorted weak scaling graph follows the same logic as the random weak scaling. See above. 
+
+
+#### **Weak Scaling - Perturbed**
+<img width="888" alt="Screenshot 2024-10-30 at 8 57 20 PM" src="https://github.com/user-attachments/assets/28233019-15d1-472a-8993-2d257168f94c">
+<img width="888" alt="Screenshot 2024-10-30 at 8 57 18 PM" src="https://github.com/user-attachments/assets/b0004123-8bd0-44d2-8d49-52e63571b714">
+<img width="888" alt="Screenshot 2024-10-30 at 8 57 15 PM" src="https://github.com/user-attachments/assets/ccd9a927-4a4d-4c52-99ba-b6f1e6f62af7">
+
+Perturbed weak scaling graph follows the same logic as the random weak scaling. See above. 
 
 ### Bitonic Sort
 
