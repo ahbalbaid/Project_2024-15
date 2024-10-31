@@ -599,9 +599,67 @@ The worker function scaled well with more processors.
 
     ![Worker Function Max](./radixsort/final_trial/sorted_array/plot/max/worker_function.png)
 
-#### **1% Perturbed Arrays**
-TBD
+#### **Perturbed Input Arrays**
 
+- **Max**: Even with added processors, the validation times in the perturbed array stayed consistent.
+
+    ![Perturbed Validation Max Log Scale](./radixsort/final_trial/perturbed_array/plot/max/sort_validation_log.png)
+
+##### **Whole Function**
+Adding processors boosted overall performance, especially for larger arrays.
+  
+- **Max**: Larger arrays showed the longest times with fewer processors and saw only minor improvements past a certain threshold.
+
+    - **Log Scale**:
+
+    ![Whole Function Max Log Scale](./radixsort/final_trial/perturbed_array/plot/max/whole_function_log.png)
+
+    - **Regular Scale**:
+
+    ![Whole Function Max](./radixsort/final_trial/perturbed_array/plot/max/whole_function.png)
+  
+
+##### **Worker Function**
+The worker function scaled effectively with more processors.
+  
+- **Max**: Execution times dropped noticeably with larger arrays and additional processors, but smaller arrays saw limited gains due to communication overhead.
+
+    - **Log Scale**:
+
+    ![Worker Function Max Log Scale](./radixsort/final_trial/sorted_array/plot/max/worker_function_log.png)
+
+    - **Regular Scale**:
+
+    ![Worker Function Max](./radixsort/final_trial/sorted_array/plot/max/worker_function.png)
+
+#### **Strong Scaling**
+
+##### **Main Speedup**
+We can see an obvious speedup, especially with larger array sizes, where parallel processing gives a clear advantage. As the number of processors increases, there’s a noticeable drop in total execution time, showing that parallelizing radix sort is highly effective for larger inputs.
+
+![Main Speedup](./radixsort/mainSpeedup.png)
+
+##### **Main Avg**
+This plot highlights the average time per rank, which declines as the processor count goes up. It’s clear that strong scaling works well for reducing the overall time spent per rank, especially on larger data sizes.
+
+
+![Main Avg Strong Scaling](./radixsort/main%20-%20Avg%20Time%20per%20Rank%20(Array%20Size:%20268435456)_log.png)
+
+##### **Communication**
+It’s obvious here that communication was the main bottleneck in the algorithm. Operations like `MPI_Bcast` and `MPI_Gather` significantly slow down the performance, especially with higher processor counts. These communication tasks add extra time due to the need for synchronization and data distribution across processors, limiting the speedup potential.
+    
+![Comm dup Strong Scaling](./radixsort/MPI_Comm_dup%20-%20Avg%20Time%20per%20Rank%20(Array%20Size:%20268435456)_log.png)
+
+![Bcast Strong Scaling](./radixsort/MPI_Bcast%20-%20Avg%20Time%20per%20Rank%20(Array%20Size:%20268435456)_log.png)
+
+![Gather Strong Scaling](./radixsort/MPI_Gather%20-%20Avg%20Time%20per%20Rank%20(Array%20Size:%20268435456)_log.png)
+
+![Scatter Strong Scaling](./radixsort/MPI_Scatterv%20-%20Avg%20Time%20per%20Rank%20(Array%20Size:%20268435456)_log.png)
+
+![Barrier Strong Scaling](./radixsort/MPI_Barrier%20-%20Avg%20Time%20per%20Rank%20(Array%20Size:%20268435456)_log.png)
+
+#### **Conclusion**
+To wrap up, our parallel radix sort implementation delivers clear speedups, especially on larger datasets and with more processors. However, communication overhead is a major limiting factor, causing a slowdown that reduces the effectiveness of the algorithm’s scalability. The primary issue lies in the frequent need for inter-processor communication, which restricts how much benefit we get from parallelization. Improving the communication model or cutting down on data transfers could help boost performance further and allow radix sort to scale more efficiently in high-performance, parallel computing setups.
 
 
 ### Sample Sort
