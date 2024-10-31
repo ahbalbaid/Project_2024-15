@@ -623,11 +623,11 @@ The worker function scaled effectively with more processors.
 
     - **Log Scale**:
 
-    ![Worker Function Max Log Scale](./radixsort/final_trial/sorted_array/plot/max/worker_function_log.png)
+    ![Worker Function Max Log Scale](./radixsort/final_trial/perturbed_array/plot/max/worker_function_log.png)
 
     - **Regular Scale**:
 
-    ![Worker Function Max](./radixsort/final_trial/sorted_array/plot/max/worker_function.png)
+    ![Worker Function Max](./radixsort/final_trial/perturbed_array/plot/max/worker_function.png)
 
 #### **Strong Scaling**
 
