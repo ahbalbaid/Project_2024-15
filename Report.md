@@ -373,19 +373,22 @@ Perturbed weak scaling graph follows the same logic as the random weak scaling. 
 ### Bitonic Sort
 
 #### **Weak scaling**
-Bitonic is an unstable algorithm which means it reorders the elements in the array even if they are already sorted. The sorting time decreases for each input size and the largest array had the greatest speedup. Computation dominates the overall runtime which includes local sequential sort and merging. As parallelization increases, each thread operates on a smaller portion of data.  
+Bitonic is an unstable algorithm which means it reorders the elements in the array even if they are already sorted. The sorting time decreases for each input size and the largest array had the greatest speedup. Computation dominates the overall runtime which includes local sequential sort and merging.  
 
 **Main**:  
+The input of size 2^28 had the largest decrease in runtime as the number of threads increased. The runtime of the other inputs remained constant or slightly increased. The graphs support the conclusion that parallelization is more effective for large inputs. For large thread counts, parallelization overhead dominates the runtime for small inputs.   
 ![image](https://github.com/user-attachments/assets/f08e75e4-08c3-4059-8660-cf43638324b2)
 ![image](https://github.com/user-attachments/assets/cf54d28a-fa91-4d8b-88bd-3c05e7aed336)
 ![image](https://github.com/user-attachments/assets/e4189bad-193b-4f8f-ba9f-6a7812502913)
 ![image](https://github.com/user-attachments/assets/cda57cf4-3bdb-42ed-b20c-f43a8ef0ada7)
 **Comp_Large**:  
+Each input type had the same trend in computation time. The input of the largest size had the greatest improvement in computation time, while the smaller inputs remained constant. As parallelization increases, each thread operates on a smaller portion of data. All the runtimes converged to around the same level as the threads increased to 512.  
 ![image](https://github.com/user-attachments/assets/abfe73e6-ec89-46ff-aeca-220de7c53727)
 ![image](https://github.com/user-attachments/assets/e6b3928e-9796-449a-a66e-c6db9db7ed2e)
 ![image](https://github.com/user-attachments/assets/866f460b-5e7c-4a8e-b579-9b7a89b00384)
 ![image](https://github.com/user-attachments/assets/e8d006ff-886e-413e-a6f9-d6eee023edff)
 **Comm**:  
+Communication time remained relatively constant for most of the input sizes. Bitonic sort transfers the same amount of data between processes regardless of input size. The input of size 2^28 had a decrease in communication time as parallelization increased. For large input sizes, communication parallelization had a significant effect.  
 ![image](https://github.com/user-attachments/assets/552553d3-b12a-43db-ba68-3e344de25172)
 ![image](https://github.com/user-attachments/assets/31e45a85-f10a-4ec5-b7a6-f6b0dc4fe07f)
 ![image](https://github.com/user-attachments/assets/ba1145b1-6672-459f-a76f-55abad22aec1)
@@ -393,22 +396,26 @@ Bitonic is an unstable algorithm which means it reorders the elements in the arr
 
 #### **Strong scaling speedup**
 **Main**:  
+The trends in speedup are similar across the input types. As parallelization reaches a maximum of 512 threads, the amount of speedup is proportional to input size. The inputs of sizes 2^28 and 2^26 had improved in performance from parallelization. The speedup of inputs smaller than 2^26 decreased since the overhead of managing many threads dominates the workload reduction.   
 ![image](https://github.com/user-attachments/assets/010bc4cf-cbc3-4923-8de9-692c7fee63ad)
 ![image](https://github.com/user-attachments/assets/b8851929-1c85-42d7-9970-a102b857e2f7)
 ![image](https://github.com/user-attachments/assets/0179148d-b915-4067-9c62-95b20eebe8ef)
 ![image](https://github.com/user-attachments/assets/64d37430-d13c-4b2f-bd6b-54e88cd7b205)  
 **Comp_Large**:  
+The trends in computational speedup are similar to the trends in the previous graphs for the main function. The larger input sizes had a steady increase in speed, while the smaller inputs experienced diminishing returns after 32 processes as the threads were distributed across multiple nodes.  
 ![image](https://github.com/user-attachments/assets/354ff9ce-433e-4801-b879-639dfd32150c)
 ![image](https://github.com/user-attachments/assets/66b020a6-a761-40a4-b19e-5f04338919c4)
 ![image](https://github.com/user-attachments/assets/43fc5946-a86b-48f9-ad62-7d534d550c8e)
 ![image](https://github.com/user-attachments/assets/dc118d53-73fe-426c-ba53-3666b7d984d9)  
 **Comm**:  
+There are no clear trends in communication speedup. The algorithm's implementation does not directly parallelize communication, so no speedup is expected.   
 ![image](https://github.com/user-attachments/assets/a8b44195-ae2f-4b4c-8aa6-78b5b6d1a38f)
 ![image](https://github.com/user-attachments/assets/8ee16786-2b8c-42d9-8ec2-f769de15fe74)
 ![image](https://github.com/user-attachments/assets/08cfc750-4ba2-4353-beca-6190ab3f4998)
 ![image](https://github.com/user-attachments/assets/074f9445-1bb3-434c-b4d1-923a905d9569)
 
 #### **All Input Types, Strong scaling**
+The random input arrays took the most amount of time compared to the different inputs. More time is needed on local sequential sort since not enough threads are available to utilize the parallel nature of bitonic sort. As the number of threads increases, each input size converges to a low runtime. Communication remains relatively constant and accounts for a small portion of the overall runtime. The 1% perturbed arrays show similar trends compared to the other inputs. As the parallelization increases, each input type and array size converge to similar runtimes. Bitonic sort is invariant to input type and performs effectively in environments with large input sizes and high parallelization.  
 **Input size 2^24**:  
 ![image](https://github.com/user-attachments/assets/db0b45d2-af5b-487d-8e9d-e1ae04ab59b9)
 ![image](https://github.com/user-attachments/assets/6e2264cb-e154-44e9-b742-a66f69e4c88c)
@@ -421,16 +428,6 @@ Bitonic is an unstable algorithm which means it reorders the elements in the arr
 ![image](https://github.com/user-attachments/assets/0c326091-5701-46e9-9a4b-041a05f76130)
 ![image](https://github.com/user-attachments/assets/2b6cd612-eec6-4f3d-8495-5dc6e66994c5)
 ![image](https://github.com/user-attachments/assets/052e76c9-ecc7-4e6c-acc1-a3e38bad384e)
-
-#### **Random Input Arrays**
-The random input arrays took the most amount of time compared to the different inputs. More time is needed on local sequential sort since not enough threads are available to utilize the parallel nature of bitonic sort. As the number of threads increase, each input size converges to a low runtime. Communication remains relatively constant and accounts for a small portion of the overall runtime.   
-  
-
-
-#### **1% Perturbed Arrays**
-The 1% perturbed arrays show similar trends compared to the other inputs. As the parallelization increases each input type and array size converges to similar runtimes. Increasing the number of threads past a 2^9 will not improve runtime significantly since parallelization overhead will become dominant.  
-
-
 
 ### Radix Sort
 We couldn't run tests with 1024 processors because Grace had a proxy error. Plus, the queue was really long, so we were only able to test with random input arrays, reversed arrays, and mostly sorted ones. To keep things simple, we focused on the most important plots and based our observations on those.
